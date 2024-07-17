@@ -6,7 +6,7 @@ export function useLocalStorage(key: string, initValue: string = '') {
       return item !== null ? item : initValue;
    };
 
-   const [localStorageValue, setLocalStorageValue] = useState<string>(readLocalStorageValue);
+   const [localStorageValue, setLocalStorageValue] = useState<string>(readLocalStorageValue());
 
    useEffect(() => {
       return () => {
