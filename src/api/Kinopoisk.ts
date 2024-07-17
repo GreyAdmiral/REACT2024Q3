@@ -16,9 +16,9 @@ export class Kinopoisk {
    };
 
    constructor() {
-      this.url = import.meta.env.VITE_API_URL;
+      this.url = 'https://kinopoiskapiunofficial.tech/api/v2.2/films';
+      this.infoUrl = 'http://www.omdbapi.com';
       this.key = import.meta.env.VITE_API_KEY;
-      this.infoUrl = import.meta.env.VITE_INFO_API_URL;
       this.infoKey = import.meta.env.VITE_INFO_API_KEY;
       this.header = {
          method: 'GET',
