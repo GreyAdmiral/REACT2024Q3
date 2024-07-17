@@ -1,0 +1,56 @@
+%fontsize {
+   @include m.adaptiveValue('font-size', 16px, 12px);
+}
+
+.search {
+   @extend %centerflex;
+   @extend %bblockstyle;
+   @extend %fontsize;
+   min-width: 15em;
+   width: 100%;
+   padding: f.rem(5px) 0;
+   overflow: hidden;
+
+   &-field {
+      width: 100%;
+      background-color: v.$blackLight;
+      @extend %fontsize;
+      padding-left: f.rem(10px);
+
+      & input {
+         width: 100%;
+         caret-color: v.$whiteDark;
+         text-transform: uppercase;
+         outline: none;
+         @include m.colors(v.$whiteDark, v.$blackLight);
+         @extend %fontsize;
+      }
+   }
+
+   &-button {
+      cursor: pointer;
+      border-radius: 0 10px 10px 0;
+      border-left: 2px solid v.$blackUltraTransparent;
+      text-transform: uppercase;
+      padding: 0.625em;
+      @extend %fontsize;
+      @include m.colors(v.$whiteDark, v.$blackLightTransparent);
+      @include m.animatebtn();
+
+      @include m.focused {
+         box-shadow: inset 0 0 0.125em 0.125em v.$blackUltraTransparent;
+      }
+
+      &:focus {
+         box-shadow: inset 0 0 0.125em 0.125em v.$blackUltraTransparent;
+      }
+   }
+
+   &-error-button {
+      color: v.$comicsRad;
+      font-weight: 600;
+      border-radius: 10px 0 0 10px;
+      border-right: 2px solid v.$blackUltraTransparent;
+      border-left: none;
+   }
+}
