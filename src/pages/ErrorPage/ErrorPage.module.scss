@@ -5,7 +5,7 @@
    flex: 1 1 auto;
    height: 100%;
 
-   span {
+   p {
       @include m.flex(center);
       height: 100%;
       font-family: Coiny, Verdana, Geneva, Tahoma, sans-serif;

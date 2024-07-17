@@ -1,5 +1,5 @@
 import { Component, ErrorInfo, PropsWithChildren } from 'react';
-import { ErrorComponent } from '@components/ErrorComponent/ErrorComponent';
+import { ErrorPage } from '@pages/ErrorPage/ErrorPage';
 
 interface ErrorBoundaryState {
    hasError: boolean;
@@ -23,7 +23,7 @@ export class ErrorBoundary extends Component<PropsWithChildren, ErrorBoundarySta
 
    render() {
       if (this.state.hasError) {
-         return <ErrorComponent error={this.state.error} />;
+         return <ErrorPage error={this.state.error} />;
       }
 
       return this.props.children;

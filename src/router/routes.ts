@@ -3,6 +3,7 @@ export enum AppRoutes {
    SEARCH_ROUTE = '/search',
    PAGE_ROUTE = '/pages',
    INFO_ROUTE = '/movie',
+   ERROR_ROUTE = '/error',
 }
 
 const AppRoutesTitles: Record<string, string> = {

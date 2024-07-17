@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { Layot } from '@components/Layot/Layot';
-import { UndefinedPage } from '@components/UndefinedPage/UndefinedPage';
+import { UndefinedPage } from '@pages/UndefinedPage/UndefinedPage';
 import { Main } from '@pages/Main/Main';
 import { AppRoutes } from './routes';
 
