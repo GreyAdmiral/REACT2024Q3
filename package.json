@@ -1,0 +1,51 @@
+{
+   "name": "react",
+   "private": true,
+   "version": "1.0.0",
+   "type": "module",
+   "scripts": {
+      "dev": "vite",
+      "build": "tsc -b && vite build",
+      "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+      "lint:fix": "eslint . --fix --color",
+      "prettier": "prettier ./src --check",
+      "prettier:fix": "prettier ./src --write",
+      "format": "eslint . --fix --color && prettier ./src --write",
+      "preview": "vite preview",
+      "prepare": "husky .husky"
+   },
+   "dependencies": {
+      "react": "^18.3.1",
+      "react-dom": "^18.3.1",
+      "react-router-dom": "^6.23.1"
+   },
+   "devDependencies": {
+      "@types/estree": "^1.0.5",
+      "@types/react": "^18.3.3",
+      "@types/react-dom": "^18.3.0",
+      "@typescript-eslint/eslint-plugin": "^7.13.1",
+      "@typescript-eslint/parser": "^7.13.1",
+      "@vitejs/plugin-react": "^4.3.1",
+      "autoprefixer": "^10.4.19",
+      "classnames": "^2.5.1",
+      "eslint": "^8.57.0",
+      "eslint-plugin-prettier": "^5.1.3",
+      "eslint-plugin-react": "^7.34.3",
+      "eslint-plugin-react-compiler": "^0.0.0-experimental-0998c1e-20240625",
+      "eslint-plugin-react-hooks": "^4.6.2",
+      "eslint-plugin-react-refresh": "^0.4.7",
+      "husky": "^9.0.11",
+      "lint-staged": "^15.2.7",
+      "prettier": "^3.3.2",
+      "sass": "^1.77.6",
+      "typescript": "^5.2.2",
+      "vite": "^5.3.1",
+      "vite-plugin-checker": "^0.6.4",
+      "vite-plugin-clean": "^1.0.0",
+      "vite-plugin-favicons-inject": "^2.2.0",
+      "vite-plugin-imagemin": "^0.6.1",
+      "vite-plugin-webfont-dl": "^3.9.4",
+      "vite-tsconfig-paths": "^4.3.2"
+   },
+   "homepage": "https://rolling-scopes-school.github.io/greyadmiral-REACT2024Q3/hooks-and-routing/"
+}

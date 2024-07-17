@@ -1,0 +1,31 @@
+.header {
+   min-height: 7.142rem;
+   padding: 0.8571rem;
+
+   &-body {
+      @extend %centercolflex;
+      @extend %fullwhp;
+      text-align: center;
+      color: v.$white;
+      // gap: 0.714em;
+      padding-top: f.rem(21px);
+      padding-bottom: f.rem(21px);
+   }
+
+   &-title {
+      display: inline-block;
+      @include m.adaptiveValue('font-size', 49px, 23px);
+      font-family: Coiny, Verdana, Geneva, Tahoma, sans-serif;
+
+      a {
+         display: inline-block;
+         color: v.$comicsRad;
+         text-shadow:
+            0 0 0.063em v.$yellow,
+            0 0 0.063em v.$yellow,
+            0 0 0.063em v.$yellow;
+         text-transform: uppercase;
+      }
+      // padding-bottom: f.rem(10px);
+   }
+}
