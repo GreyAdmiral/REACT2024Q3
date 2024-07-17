@@ -1,17 +1,9 @@
-import { Component, ReactNode } from 'react';
+import { FC } from 'react';
 
-interface ContainerProps extends React.PropsWithChildren {
+interface ContainerProps {
    className?: string;
 }
 
-export class Container extends Component<ContainerProps> {
-   constructor(props: ContainerProps) {
-      super(props);
-   }
-
-   render(): ReactNode {
-      const { className } = this.props;
-
-      return <div className={className ? `${className}-container` : 'container'}>{this.props.children}</div>;
-   }
-}
+export const Container: FC<React.PropsWithChildren & ContainerProps> = ({ children, className }) => {
+   return <div className={className ? `${className}-container` : 'container'}>{children}</div>;
+};

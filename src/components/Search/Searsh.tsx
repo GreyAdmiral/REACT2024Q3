@@ -1,98 +1,83 @@
-import { Component, createRef, KeyboardEvent, PropsWithChildren, ReactNode } from 'react';
+import { createRef, FC, KeyboardEvent, useState } from 'react';
 import { Kinopoisk } from '@api/Kinopoisk';
 import classnames from 'classnames';
+import { useReactPlaceholder } from '@hooks/useReactPlaceholder';
+import { getFilteredFilms } from '@tools/getFilteredFilms';
 import { MoviesState, MoviesProps } from '@typefiles/types';
 import styles from './Searsh.module.scss';
 
 type StateArgument = MoviesState | ((state: MoviesState) => MoviesState);
 
-interface SearchProps extends PropsWithChildren {
+interface SearchProps {
    state: MoviesState;
    setSearch: (state: StateArgument) => void;
-   api: InstanceType<typeof Kinopoisk>;
+   apiRef: React.MutableRefObject<InstanceType<typeof Kinopoisk>>;
+   localStorageValue: string;
+   setLocalStorageValue: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const searchKeyCodes = ['Enter'];
 
-export class Searsh extends Component<SearchProps> {
-   protected searchMaxLength: number;
-   protected name: string;
-   protected placeholder: string;
-   searchRef = createRef<HTMLInputElement>();
-   searchButtonRef = createRef<HTMLButtonElement>();
+export const Searsh: FC<SearchProps> = ({ state, setSearch, apiRef, localStorageValue, setLocalStorageValue }) => {
+   const searchMaxLength = 55;
+   const name = 'search';
+   const [searchValue, setSearchValue] = useState(localStorageValue);
+   const [placeholder, setPlaceholder] = useState<string>('Поиск');
+   const searchRef = createRef<HTMLInputElement>();
+   const searchButtonRef = createRef<HTMLButtonElement>();
 
-   constructor(props: SearchProps) {
-      super(props);
-      this.searchMaxLength = 55;
-      this.placeholder = 'Поиск';
-      this.name = 'search';
-      this.keyDown = this.keyDown.bind(this);
-      this.search = this.search.bind(this);
-      this.dispatchError = this.dispatchError.bind(this);
-   }
-
-   search() {
-      const { setSearch, state, api } = this.props;
-      const value = this.searchRef.current?.value;
-
-      api.getFilms(state.activePage, value || '').then((data: MoviesProps) => {
-         setSearch({ ...state, movies: data.items });
-
-         if (value) {
-            localStorage.setItem('keywords', value);
-         } else {
-            localStorage.removeItem('keywords');
-         }
+   function search() {
+      apiRef.current.getFilms({ activePage: state.activePage, keywords: searchValue }).then((data: MoviesProps) => {
+         setSearch({ ...state, movies: getFilteredFilms(data.items), totalPages: data.totalPages });
+         setLocalStorageValue(searchValue);
       });
-
-      if (this.searchRef.current) {
-         this.searchRef.current.value = '';
-      }
 
       (document.activeElement as HTMLTemplateElement).blur();
    }
 
-   dispatchError() {
-      const { setSearch, state } = this.props;
-
+   function dispatchError() {
       setSearch({ ...state, isError: true });
    }
 
-   keyDown(e: KeyboardEvent) {
+   function keyDown(e: KeyboardEvent) {
       e.stopPropagation();
 
       if (searchKeyCodes.includes(e.code)) {
-         this.searchButtonRef.current?.click();
+         searchButtonRef.current?.click();
       }
    }
 
-   render(): ReactNode {
-      return (
-         <div className={styles.search} onKeyDown={this.keyDown}>
-            <button
-               type="button"
-               className={classnames(styles.searchButton, styles.searchErrorButton)}
-               onClick={this.dispatchError}
-               ref={this.searchButtonRef}
-            >
-               Ошибка
-            </button>
+   useReactPlaceholder({ ref: searchRef, placeholder, setPlaceholder });
 
-            <div className={styles.searchField}>
-               <input
-                  ref={this.searchRef}
-                  type="text"
-                  name={this.name}
-                  placeholder={this.placeholder}
-                  maxLength={this.searchMaxLength}
-                  autoComplete="off"
-               />
-            </div>
+   return (
+      <div className={styles.search} onKeyDown={keyDown}>
+         <button
+            type="button"
+            className={classnames(styles.searchButton, styles.searchErrorButton)}
+            onClick={dispatchError}
+            ref={searchButtonRef}
+         >
+            Ошибка
+         </button>
 
-            <button type="button" className={styles.searchButton} onClick={this.search} ref={this.searchButtonRef}>
-               Найти
-            </button>
+         <div className={styles.searchField}>
+            <input
+               ref={searchRef}
+               type="text"
+               name={name}
+               placeholder={placeholder}
+               maxLength={searchMaxLength}
+               autoComplete="off"
+               value={searchValue}
+               onChange={(e) => {
+                  setSearchValue(e.currentTarget.value);
+               }}
+            />
          </div>
-      );
-   }
-}
+
+         <button type="button" className={styles.searchButton} onClick={search} ref={searchButtonRef}>
+            Найти
+         </button>
+      </div>
+   );
+};

@@ -1,0 +1,75 @@
+.movie-info {
+   @include m.flex(null, null, column);
+   row-gap: f.rem(10px);
+   @extend %bblockstyle;
+   position: sticky;
+   top: 0;
+   background-color: v.$blackLightTransparent;
+   padding: 0.714em;
+   max-width: calc(25% - 2px);
+   width: 100%;
+   height: fit-content;
+   overflow-x: hidden;
+   overflow-y: auto;
+
+   @media all and (max-width: 450px) {
+      max-width: calc(45% - 2px);
+   }
+
+   &-header {
+      @include m.flex(null, null, column);
+      row-gap: f.rem(10px);
+      padding: f.rem(5px) 0;
+   }
+
+   &-title {
+      @include m.adaptiveValue('font-size', 18px, 14px);
+      font-variant: small-caps;
+      font-weight: bold;
+      color: v.$whiteDark;
+      text-align: center;
+   }
+
+   &-close {
+      align-self: center;
+      width: fit-content;
+      padding: f.rem(2px);
+      color: v.$whiteDark;
+      background-color: transparent;
+   }
+
+   &-body {
+      @include m.flex(null, null, column);
+      row-gap: f.rem(5px);
+   }
+
+   &-image {
+      @include m.responsiveImage(true);
+      padding: 0 0 146% 100%;
+
+      img {
+         object-position: center top;
+      }
+   }
+
+   &-text {
+      @include m.adaptiveValue('font-size', 14px, 10px);
+
+      &-row {
+         padding: 0.143em;
+         @include m.adaptiveValue('font-size', 14px, 10px);
+         line-height: 1.3;
+
+         & span {
+            @include m.adaptiveValue('font-size', 14px, 10px);
+            font-weight: bold;
+            line-height: 1.3;
+            color: v.$whiteDark;
+
+            @include m.smalltablet {
+               word-wrap: break-word;
+            }
+         }
+      }
+   }
+}

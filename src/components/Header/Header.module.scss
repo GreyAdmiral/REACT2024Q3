@@ -15,13 +15,17 @@
    &-title {
       display: inline-block;
       @include m.adaptiveValue('font-size', 49px, 23px);
-      color: v.$comicsRad;
-      text-shadow:
-         0 0 0.063em v.$yellow,
-         0 0 0.063em v.$yellow,
-         0 0 0.063em v.$yellow;
-      text-transform: uppercase;
       font-family: Coiny, Verdana, Geneva, Tahoma, sans-serif;
+
+      a {
+         display: inline-block;
+         color: v.$comicsRad;
+         text-shadow:
+            0 0 0.063em v.$yellow,
+            0 0 0.063em v.$yellow,
+            0 0 0.063em v.$yellow;
+         text-transform: uppercase;
+      }
       // padding-bottom: f.rem(10px);
    }
 }

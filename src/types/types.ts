@@ -7,8 +7,8 @@ export type MoviesProps = {
 export type MovieProps = {
    kinopoiskId: string;
    imdbId: string | null;
-   nameRu: string | null;
-   nameEn: string | null;
+   nameRu: string;
+   nameEn: string;
    nameOriginal: string;
    ratingKinopoisk: number | null;
    ratingImdb: number | null;
@@ -33,4 +33,38 @@ type country = {
 
 type genre = {
    genre: string;
+};
+
+export type MovieInfoStruct = {
+   Title: string;
+   Year: string;
+   Rated: string;
+   Released: string;
+   Runtime: string;
+   Genre: string;
+   Director: string;
+   Writer: string;
+   Actors: string;
+   Plot: string;
+   Language: string;
+   Country: string;
+   Awards: string;
+   Poster: string;
+   Metascore: string;
+   imdbRating: string;
+   imdbVotes: string;
+   imdbID: string;
+   Type: string;
+   DVD: string;
+   BoxOffice: string;
+   Production: string;
+   Website: string;
+   Response: string;
+   Ratings: infoRaiting[];
+   Error?: string;
+};
+
+type infoRaiting = {
+   Source: string;
+   Value: string;
 };

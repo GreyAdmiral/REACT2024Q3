@@ -1,33 +1,31 @@
-import { Component, ReactNode } from 'react';
+import { FC, useEffect } from 'react';
+import classNames from 'classnames';
+import { Kinopoisk } from '@api/Kinopoisk';
 import { Movie } from '@components/Movie/Movie';
-import { MovieProps } from '@typefiles/types';
+import { MovieInfoStruct, MovieProps } from '@typefiles/types';
 import styles from './Movies.module.scss';
 
-interface MoviesArray extends React.PropsWithChildren {
+interface MoviesArray {
    movies: MovieProps[];
    isError: boolean;
+   apiRef: React.MutableRefObject<InstanceType<typeof Kinopoisk>>;
+   switchInfoVisibleref: React.MutableRefObject<(info: MovieInfoStruct) => void>;
+   isInfoVisible: boolean;
 }
 
-export class Movies extends Component<MoviesArray> {
-   constructor(props: MoviesArray) {
-      super(props);
-   }
-
-   componentDidUpdate(): void {
-      if (this.props.isError) {
+export const Movies: FC<MoviesArray> = ({ movies, isError, apiRef, switchInfoVisibleref, isInfoVisible }) => {
+   useEffect(() => {
+      if (isError) {
          throw Error('Тест ErrorBoundary!');
       }
-   }
+   }, [isError]);
 
-   render(): ReactNode {
-      const { movies } = this.props;
-      return (
-         <section className={styles.movies}>
-            {!movies.length && <span className={styles.moviesNotFound}>Ничего не найдено</span>}
-            {movies.map((movie) => (
-               <Movie key={movie.posterUrl} movie={movie} />
-            ))}
-         </section>
-      );
-   }
-}
+   return (
+      <section className={classNames(styles.movies, { [styles.half]: isInfoVisible })}>
+         {!movies.length && <span className={styles.moviesNotFound}>Ничего не найдено</span>}
+         {movies.map((movie) => (
+            <Movie key={movie.posterUrl} movie={movie} apiRef={apiRef} switchInfoVisibleref={switchInfoVisibleref} />
+         ))}
+      </section>
+   );
+};

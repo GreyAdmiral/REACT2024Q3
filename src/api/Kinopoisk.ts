@@ -1,8 +1,15 @@
 import { getErrorInfo } from '@tools/getErrorInfo';
 
+type GetFilmsArguments = {
+   activePage?: number;
+   keywords?: string;
+};
+
 export class Kinopoisk {
    protected url: string;
    protected key: string;
+   protected infoUrl: string;
+   protected infoKey: string;
    protected header: {
       method: string;
       headers: Record<string, string>;
@@ -11,6 +18,8 @@ export class Kinopoisk {
    constructor() {
       this.url = import.meta.env.VITE_API_URL;
       this.key = import.meta.env.VITE_API_KEY;
+      this.infoUrl = import.meta.env.VITE_INFO_API_URL;
+      this.infoKey = import.meta.env.VITE_INFO_API_KEY;
       this.header = {
          method: 'GET',
          headers: {
@@ -20,7 +29,15 @@ export class Kinopoisk {
       };
    }
 
-   async getFilms(activePage: number, keywords: string = '') {
+   async getFilms(options: GetFilmsArguments) {
+      const defaultOptions = {
+         activePage: 1,
+         keywords: '',
+      };
+
+      Object.assign(defaultOptions, options);
+      const { activePage, keywords } = defaultOptions;
+
       let url = `${this.url}?page=${activePage}`;
 
       if (keywords) {
@@ -36,6 +53,23 @@ export class Kinopoisk {
 
          const films = await request.json();
          return films;
+      } catch (err) {
+         console.error(err);
+      }
+   }
+
+   async getFilmInfo(movieName: string) {
+      const url = `${this.infoUrl}/?apikey=${this.infoKey}&i=tt3896198&t=${encodeURIComponent(movieName)}`;
+
+      try {
+         const request = await fetch(url);
+
+         if (!request.ok) {
+            throw Error(`${getErrorInfo(request.status)} Status Code: ${request.status}`);
+         }
+
+         const filmInfo = await request.json();
+         return filmInfo;
       } catch (err) {
          console.error(err);
       }

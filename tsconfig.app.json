@@ -36,7 +36,8 @@
          "@api/*": ["src/api/*"],
          "@pages/*": ["src/pages/*"],
          "@typefiles/*": ["src/types/*"],
-         "@tools/*": ["src/tools/*"]
+         "@tools/*": ["src/tools/*"],
+         "@hooks/*": ["src/hooks/*"]
       }
    },
    "include": ["src"]
