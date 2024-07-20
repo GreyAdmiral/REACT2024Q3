@@ -1,47 +1,37 @@
 import { FC, useEffect, useId, useState } from 'react';
 import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import { Kinopoisk } from '@api/Kinopoisk';
+import { useAppSelector } from '@hooks/useAppSelector';
+import { useAppDispatch } from '@hooks/useAppDispatch';
+import { setMovies, setTotalPages, setActivePage } from '@store/slices/stateSlice';
+import { setIsVisible } from '@store/slices/infoSlice';
 import { getFilteredFilms } from '@tools/getFilteredFilms';
 import { AppRoutes } from '@router/routes';
-import { MoviesProps, MoviesState } from '@typefiles/types';
+import { MoviesProps } from '@typefiles/types';
 import styles from './Pagination.module.scss';
 
-type StateArgument = MoviesState | ((state: MoviesState) => MoviesState);
-
 interface PaginationProps {
-   totalPages: number;
    apiRef: React.MutableRefObject<InstanceType<typeof Kinopoisk>>;
-   state: MoviesState;
-   setState: (state: StateArgument) => void;
    localStorageValue: string;
    setLocalStorageValue: React.Dispatch<React.SetStateAction<string>>;
-   setIsInfoVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const setActiveClass = ({ isActive }: { isActive: boolean }) => (isActive ? styles.paginationActive : undefined);
 
-export const Pagination: FC<PaginationProps> = ({
-   totalPages,
-   apiRef,
-   state,
-   setState,
-   localStorageValue,
-   setIsInfoVisible,
-}) => {
+export const Pagination: FC<PaginationProps> = ({ apiRef, localStorageValue }) => {
    const id = useId();
    const navigate = useNavigate();
    const { number } = useParams();
    const [isPrevPageDisabled, setIsPrevPageDisabled] = useState<boolean>(false);
    const [isNextPageDisabled, setIsNextPageDisabled] = useState<boolean>(false);
+   const totalPages = useAppSelector((state) => state.state.totalPages);
+   const dispatch = useAppDispatch();
 
    function switchContent(pageNumber: number) {
       apiRef.current.getFilms({ activePage: pageNumber, keywords: localStorageValue }).then((data: MoviesProps) => {
-         setState({
-            ...state,
-            movies: getFilteredFilms(data.items),
-            totalPages: data.totalPages,
-            activePage: pageNumber,
-         });
+         dispatch(setMovies(getFilteredFilms(data.items)));
+         dispatch(setTotalPages(data.totalPages));
+         dispatch(setActivePage(pageNumber));
       });
    }
 
@@ -49,7 +39,7 @@ export const Pagination: FC<PaginationProps> = ({
       e.stopPropagation();
 
       if (number && +number > 1) {
-         setIsInfoVisible(false);
+         dispatch(setIsVisible(false));
          navigate(`${AppRoutes.PAGE_ROUTE}/${+number - 1}`);
          switchContent(+number - 1);
       }
@@ -58,8 +48,8 @@ export const Pagination: FC<PaginationProps> = ({
    function nextButtonClick(e: React.MouseEvent) {
       e.stopPropagation();
 
-      if (number && +number < totalPages) {
-         setIsInfoVisible(false);
+      if (number && totalPages && +number < totalPages) {
+         dispatch(setIsVisible(false));
          navigate(`${AppRoutes.PAGE_ROUTE}/${+number + 1}`);
          switchContent(+number + 1);
       }
@@ -72,14 +62,14 @@ export const Pagination: FC<PaginationProps> = ({
          setIsPrevPageDisabled(false);
       }
 
-      if (number && +number === +totalPages) {
+      if (number && totalPages && +number === +totalPages) {
          setIsNextPageDisabled(true);
       } else {
          setIsNextPageDisabled(false);
       }
    }, [number, totalPages]);
 
-   return (
+   return totalPages ? (
       <div className={styles.pagination}>
          <button className={styles.paginationItem} disabled={isPrevPageDisabled} onClick={prevButtonClick}>
             ◄
@@ -93,7 +83,7 @@ export const Pagination: FC<PaginationProps> = ({
                      className={setActiveClass}
                      onClick={(e) => {
                         e.stopPropagation();
-                        setIsInfoVisible(false);
+                        dispatch(setIsVisible(false));
                         switchContent(ind + 1);
                      }}
                   >
@@ -107,5 +97,5 @@ export const Pagination: FC<PaginationProps> = ({
             ►
          </button>
       </div>
-   );
+   ) : null;
 };

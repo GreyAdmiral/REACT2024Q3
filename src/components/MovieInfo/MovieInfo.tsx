@@ -1,42 +1,50 @@
-import { FC, useRef } from 'react';
+import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useClickOutside } from '@hooks/useClickOutside';
-import { AppRoutes } from '@router/routes';
+import { setIsVisible, setDetails } from '@store/slices/infoSlice';
+import { useAppSelector } from '@hooks/useAppSelector';
+import { useAppDispatch } from '@hooks/useAppDispatch';
 import { isExists } from '@tools/isExist';
-import { MovieInfoStruct } from '@typefiles/types';
+import { AppRoutes } from '@router/routes';
 import styles from './MovieInfo.module.scss';
 import image from '@assets/images/loading.svg';
 
-interface MovieInfoProps {
-   info: MovieInfoStruct | undefined;
-   setIsInfoVisible: React.Dispatch<React.SetStateAction<boolean>>;
-   activePage: number;
-}
+const defaultDetails = {
+   Title: '',
+   Runtime: '',
+   Plot: '',
+   Awards: '',
+   Poster: '',
+} as const;
 
 const notFound = {
    title: 'Не найдено',
    image: image,
 } as const;
 
-export const MovieInfo: FC<MovieInfoProps> = ({ info, setIsInfoVisible, activePage }) => {
-   const asideRef = useRef(null);
+export const MovieInfo = () => {
    const navigate = useNavigate();
+   const asideRef = useRef(null);
+   const { Title, Awards, Runtime, Plot, Poster, Error } = useAppSelector((state) => state.info.details);
+   const activePage = useAppSelector((state) => state.state.activePage);
+   const dispatch = useAppDispatch();
    const outClick = () => {
-      setIsInfoVisible(false);
+      dispatch(setIsVisible(false));
+      dispatch(setDetails(defaultDetails));
       navigate(`${AppRoutes.PAGE_ROUTE}/${activePage}`);
    };
 
    const infoArray = [
       {
-         param: info?.Awards,
+         param: Awards,
          text: 'Награды: ',
       },
       {
-         param: info?.Runtime,
+         param: Runtime,
          text: 'Продолжительность: ',
       },
       {
-         param: info?.Plot,
+         param: Plot,
          text: 'Описание: ',
       },
    ].filter((obj) => isExists(obj.param));
@@ -49,18 +57,16 @@ export const MovieInfo: FC<MovieInfoProps> = ({ info, setIsInfoVisible, activePa
             <button
                className={styles.movieInfoClose}
                onClick={() => {
-                  setIsInfoVisible(false);
+                  dispatch(setIsVisible(false));
                }}
             >
                {'>>>>>'}
             </button>
-            <h2 className={styles.movieInfoTitle}>
-               {isExists(info?.Title) ? info?.Title : info?.Error || notFound.title}
-            </h2>
+            <h2 className={styles.movieInfoTitle}>{isExists(Title) ? Title : Error || notFound.title}</h2>
          </header>
 
          <div className={styles.movieInfoImage}>
-            <img src={isExists(info?.Poster) ? info?.Poster : notFound.image} alt={info?.Title} />
+            <img src={isExists(Poster) ? Poster : notFound.image} alt={Title} />
          </div>
 
          <div className={styles.movieInfoBody}>

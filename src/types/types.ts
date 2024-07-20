@@ -68,3 +68,12 @@ type infoRaiting = {
    Source: string;
    Value: string;
 };
+
+export type Details = Pick<MovieInfoStruct, 'Title' | 'Awards' | 'Runtime' | 'Plot' | 'Poster'> & {
+   Error?: '';
+};
+
+export type InfoState = {
+   isVisible: boolean;
+   details: Details;
+};

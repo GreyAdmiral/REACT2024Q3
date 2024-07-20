@@ -1,25 +1,31 @@
 import { FC } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { Kinopoisk } from '@api/Kinopoisk';
+import { useAppDispatch } from '@hooks/useAppDispatch';
+import { getFilteredDetails } from '@tools/getFilteredDetails';
+import { setIsVisible, setDetails } from '@store/slices/infoSlice';
 import { MovieInfoStruct, MovieProps } from '@typefiles/types';
 import styles from './Movie.module.scss';
-import { useSearchParams } from 'react-router-dom';
 
 type Props = {
    movie: MovieProps;
    apiRef: React.MutableRefObject<InstanceType<typeof Kinopoisk>>;
-   switchInfoVisibleref: React.MutableRefObject<(info: MovieInfoStruct) => void>;
 };
 
 const separator = ' / ';
 
-export const Movie: FC<Props> = ({ movie, apiRef, switchInfoVisibleref }) => {
+export const Movie: FC<Props> = ({ movie, apiRef }) => {
    const [, setSearchParams] = useSearchParams();
+   const dispatch = useAppDispatch();
+
    function movieClickHandler(e: React.MouseEvent) {
       e.stopPropagation();
 
       setSearchParams({ info: '1', movie: movie.nameOriginal || 'not found' });
+      dispatch(setIsVisible(true));
+
       apiRef.current.getFilmInfo(movie.nameOriginal || movie.nameEn || movie.nameRu).then((data: MovieInfoStruct) => {
-         switchInfoVisibleref.current(data);
+         dispatch(setDetails(getFilteredDetails(data)));
       });
    }
 

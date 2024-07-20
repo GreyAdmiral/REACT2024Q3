@@ -37,7 +37,8 @@
          "@pages/*": ["src/pages/*"],
          "@typefiles/*": ["src/types/*"],
          "@tools/*": ["src/tools/*"],
-         "@hooks/*": ["src/hooks/*"]
+         "@hooks/*": ["src/hooks/*"],
+         "@store/*": ["src/store/*"]
       }
    },
    "include": ["src"]

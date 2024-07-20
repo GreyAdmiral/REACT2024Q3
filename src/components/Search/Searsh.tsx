@@ -2,15 +2,14 @@ import { createRef, FC, KeyboardEvent, useState } from 'react';
 import { Kinopoisk } from '@api/Kinopoisk';
 import classnames from 'classnames';
 import { useReactPlaceholder } from '@hooks/useReactPlaceholder';
+import { useAppSelector } from '@hooks/useAppSelector';
+import { useAppDispatch } from '@hooks/useAppDispatch';
+import { setMovies, setTotalPages, setIsError } from '@store/slices/stateSlice';
 import { getFilteredFilms } from '@tools/getFilteredFilms';
-import { MoviesState, MoviesProps } from '@typefiles/types';
+import { MoviesProps } from '@typefiles/types';
 import styles from './Searsh.module.scss';
 
-type StateArgument = MoviesState | ((state: MoviesState) => MoviesState);
-
 interface SearchProps {
-   state: MoviesState;
-   setSearch: (state: StateArgument) => void;
    apiRef: React.MutableRefObject<InstanceType<typeof Kinopoisk>>;
    localStorageValue: string;
    setLocalStorageValue: React.Dispatch<React.SetStateAction<string>>;
@@ -18,7 +17,10 @@ interface SearchProps {
 
 const searchKeyCodes = ['Enter'];
 
-export const Searsh: FC<SearchProps> = ({ state, setSearch, apiRef, localStorageValue, setLocalStorageValue }) => {
+export const Searsh: FC<SearchProps> = ({ apiRef, localStorageValue, setLocalStorageValue }) => {
+   const activePage = useAppSelector((state) => state.state.activePage);
+   const dispatch = useAppDispatch();
+
    const searchMaxLength = 55;
    const name = 'search';
    const [searchValue, setSearchValue] = useState(localStorageValue);
@@ -27,8 +29,9 @@ export const Searsh: FC<SearchProps> = ({ state, setSearch, apiRef, localStorage
    const searchButtonRef = createRef<HTMLButtonElement>();
 
    function search() {
-      apiRef.current.getFilms({ activePage: state.activePage, keywords: searchValue }).then((data: MoviesProps) => {
-         setSearch({ ...state, movies: getFilteredFilms(data.items), totalPages: data.totalPages });
+      apiRef.current.getFilms({ activePage: activePage, keywords: searchValue }).then((data: MoviesProps) => {
+         dispatch(setMovies(getFilteredFilms(data.items)));
+         dispatch(setTotalPages(data.totalPages));
          setLocalStorageValue(searchValue);
       });
 
@@ -36,7 +39,7 @@ export const Searsh: FC<SearchProps> = ({ state, setSearch, apiRef, localStorage
    }
 
    function dispatchError() {
-      setSearch({ ...state, isError: true });
+      dispatch(setIsError(true));
    }
 
    function keyDown(e: KeyboardEvent) {
