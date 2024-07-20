@@ -1,24 +1,15 @@
-import { FC, useEffect, useId, useState } from 'react';
+import { useEffect, useId, useState } from 'react';
 import { NavLink, useNavigate, useParams } from 'react-router-dom';
-import { Kinopoisk } from '@api/Kinopoisk';
 import { useAppSelector } from '@hooks/useAppSelector';
 import { useAppDispatch } from '@hooks/useAppDispatch';
-import { setMovies, setTotalPages, setActivePage } from '@store/slices/stateSlice';
+import { setActivePage } from '@store/slices/stateSlice';
 import { setIsVisible } from '@store/slices/infoSlice';
-import { getFilteredFilms } from '@tools/getFilteredFilms';
 import { AppRoutes } from '@router/routes';
-import { MoviesProps } from '@typefiles/types';
 import styles from './Pagination.module.scss';
-
-interface PaginationProps {
-   apiRef: React.MutableRefObject<InstanceType<typeof Kinopoisk>>;
-   localStorageValue: string;
-   setLocalStorageValue: React.Dispatch<React.SetStateAction<string>>;
-}
 
 const setActiveClass = ({ isActive }: { isActive: boolean }) => (isActive ? styles.paginationActive : undefined);
 
-export const Pagination: FC<PaginationProps> = ({ apiRef, localStorageValue }) => {
+export const Pagination = () => {
    const id = useId();
    const navigate = useNavigate();
    const { number } = useParams();
@@ -28,18 +19,14 @@ export const Pagination: FC<PaginationProps> = ({ apiRef, localStorageValue }) =
    const dispatch = useAppDispatch();
 
    function switchContent(pageNumber: number) {
-      apiRef.current.getFilms({ activePage: pageNumber, keywords: localStorageValue }).then((data: MoviesProps) => {
-         dispatch(setMovies(getFilteredFilms(data.items)));
-         dispatch(setTotalPages(data.totalPages));
-         dispatch(setActivePage(pageNumber));
-      });
+      dispatch(setIsVisible(false));
+      dispatch(setActivePage(pageNumber));
    }
 
    function prevButtonClick(e: React.MouseEvent) {
       e.stopPropagation();
 
       if (number && +number > 1) {
-         dispatch(setIsVisible(false));
          navigate(`${AppRoutes.PAGE_ROUTE}/${+number - 1}`);
          switchContent(+number - 1);
       }
@@ -49,7 +36,6 @@ export const Pagination: FC<PaginationProps> = ({ apiRef, localStorageValue }) =
       e.stopPropagation();
 
       if (number && totalPages && +number < totalPages) {
-         dispatch(setIsVisible(false));
          navigate(`${AppRoutes.PAGE_ROUTE}/${+number + 1}`);
          switchContent(+number + 1);
       }
@@ -83,7 +69,6 @@ export const Pagination: FC<PaginationProps> = ({ apiRef, localStorageValue }) =
                      className={setActiveClass}
                      onClick={(e) => {
                         e.stopPropagation();
-                        dispatch(setIsVisible(false));
                         switchContent(ind + 1);
                      }}
                   >

@@ -9,9 +9,17 @@
    max-width: calc(25% - 2px);
    width: 100%;
    height: fit-content;
-   min-height: 485px;
+   min-height: 14%;
    overflow-x: hidden;
    overflow-y: auto;
+
+   @include m.tablet {
+      min-height: 7%;
+   }
+
+   @include m.smallmobile {
+      min-height: 5%;
+   }
 
    @media all and (max-width: 450px) {
       max-width: calc(45% - 2px);
@@ -72,5 +80,10 @@
             }
          }
       }
+   }
+
+   &-center {
+      justify-content: center;
+      align-items: center;
    }
 }

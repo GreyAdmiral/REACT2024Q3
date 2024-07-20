@@ -24,6 +24,8 @@ export type MoviesState = {
    activePage: number;
    movies: MovieProps[];
    totalPages: number | null;
+   keywords: string;
+   isLoading: boolean;
    isError: boolean;
 };
 
@@ -75,5 +77,6 @@ export type Details = Pick<MovieInfoStruct, 'Title' | 'Awards' | 'Runtime' | 'Pl
 
 export type InfoState = {
    isVisible: boolean;
+   isLoading: boolean;
    details: Details;
 };

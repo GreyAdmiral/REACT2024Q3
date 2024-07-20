@@ -3,7 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import { Kinopoisk } from '@api/Kinopoisk';
 import { useAppDispatch } from '@hooks/useAppDispatch';
 import { getFilteredDetails } from '@tools/getFilteredDetails';
-import { setIsVisible, setDetails } from '@store/slices/infoSlice';
+import { setIsVisible, setDetails, setIsLoading } from '@store/slices/infoSlice';
 import { MovieInfoStruct, MovieProps } from '@typefiles/types';
 import styles from './Movie.module.scss';
 
@@ -22,10 +22,12 @@ export const Movie: FC<Props> = ({ movie, apiRef }) => {
       e.stopPropagation();
 
       setSearchParams({ info: '1', movie: movie.nameOriginal || 'not found' });
+      dispatch(setIsLoading(true));
       dispatch(setIsVisible(true));
 
       apiRef.current.getFilmInfo(movie.nameOriginal || movie.nameEn || movie.nameRu).then((data: MovieInfoStruct) => {
          dispatch(setDetails(getFilteredDetails(data)));
+         dispatch(setIsLoading(false));
       });
    }
 

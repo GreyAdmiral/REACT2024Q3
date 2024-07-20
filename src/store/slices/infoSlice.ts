@@ -3,6 +3,7 @@ import { Details, InfoState } from '@typefiles/types';
 
 const initialState: InfoState = {
    isVisible: false,
+   isLoading: false,
    details: {
       Title: '',
       Runtime: '',
@@ -20,11 +21,15 @@ const infoSlice = createSlice({
          state.isVisible = action.payload;
       },
 
+      setIsLoading(state, action: PayloadAction<boolean>) {
+         state.isLoading = action.payload;
+      },
+
       setDetails(state, action: PayloadAction<Details>) {
          state.details = action.payload;
       },
    },
 });
 
-export const { setIsVisible, setDetails } = infoSlice.actions;
+export const { setIsVisible, setIsLoading, setDetails } = infoSlice.actions;
 export default infoSlice.reducer;

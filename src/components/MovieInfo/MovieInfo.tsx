@@ -1,9 +1,11 @@
 import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import classNames from 'classnames';
 import { useClickOutside } from '@hooks/useClickOutside';
 import { setIsVisible, setDetails } from '@store/slices/infoSlice';
 import { useAppSelector } from '@hooks/useAppSelector';
 import { useAppDispatch } from '@hooks/useAppDispatch';
+import { Loader } from '@components/Loader/Loader';
 import { isExists } from '@tools/isExist';
 import { AppRoutes } from '@router/routes';
 import styles from './MovieInfo.module.scss';
@@ -26,6 +28,7 @@ export const MovieInfo = () => {
    const navigate = useNavigate();
    const asideRef = useRef(null);
    const { Title, Awards, Runtime, Plot, Poster, Error } = useAppSelector((state) => state.info.details);
+   const isLoading = useAppSelector((state) => state.info.isLoading);
    const activePage = useAppSelector((state) => state.state.activePage);
    const dispatch = useAppDispatch();
    const outClick = () => {
@@ -52,31 +55,33 @@ export const MovieInfo = () => {
    useClickOutside(asideRef, outClick);
 
    return (
-      <aside ref={asideRef} className={styles.movieInfo}>
-         <header className={styles.movieInfoHeader}>
-            <button
-               className={styles.movieInfoClose}
-               onClick={() => {
-                  dispatch(setIsVisible(false));
-               }}
-            >
-               {'>>>>>'}
-            </button>
-            <h2 className={styles.movieInfoTitle}>{isExists(Title) ? Title : Error || notFound.title}</h2>
-         </header>
+      <aside ref={asideRef} className={classNames(styles.movieInfo, { [styles.movieInfoCenter]: isLoading })}>
+         {!isLoading && (
+            <>
+               <header className={styles.movieInfoHeader}>
+                  <button className={styles.movieInfoClose} onClick={outClick}>
+                     {'>>>>>'}
+                  </button>
 
-         <div className={styles.movieInfoImage}>
-            <img src={isExists(Poster) ? Poster : notFound.image} alt={Title} />
-         </div>
+                  <h2 className={styles.movieInfoTitle}>{isExists(Title) ? Title : Error || notFound.title}</h2>
+               </header>
 
-         <div className={styles.movieInfoBody}>
-            {infoArray.map((obj) => (
-               <div key={obj.param} className={styles.movieInfoTextRow}>
-                  <span>{obj.text}</span>
-                  {obj.param}
+               <div className={styles.movieInfoImage}>
+                  <img src={isExists(Poster) ? Poster : notFound.image} alt={Title} />
                </div>
-            ))}
-         </div>
+
+               <div className={styles.movieInfoBody}>
+                  {infoArray.map((obj) => (
+                     <div key={obj.param} className={styles.movieInfoTextRow}>
+                        <span>{obj.text}</span>
+                        {obj.param}
+                     </div>
+                  ))}
+               </div>
+            </>
+         )}
+
+         {isLoading && <Loader />}
       </aside>
    );
 };

@@ -11,6 +11,10 @@
       @include m.adaptiveValue('font-size', 49px, 23px);
       text-align: center;
    }
+
+   &-center {
+      @include m.flex(center, center, column);
+   }
 }
 
 .half {
