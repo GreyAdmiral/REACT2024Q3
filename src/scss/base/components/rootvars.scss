@@ -2,8 +2,25 @@
 
 :root {
    --default-text-color: #{v.$gray};
+   --error-color: #{v.$comicsRad};
+   --undefined-page-span-color: #{v.$grayMiddle};
+   --undefined-page-span-shadow: #{v.$comicsRad};
+   --card-color: #{v.$blackLight};
+   --card-bg: #{v.$blackUltraTransparent};
+   --additional-card-bg: #{v.$blackLightTransparent};
+   --button-focus-shadow-color: #{v.$blackUltraTransparent};
+   --button-color: #{v.$whiteDark};
+   --search-field-bg: #{v.$blackLight};
 
    &[data-theme='light'] {
       --default-text-color: #{v.$blackLight};
+      --undefined-page-span-color: #{v.$blackLight};
+      --undefined-page-span-shadow: #{v.$yellow};
+      --card-color: #{v.$grayMiddleTransparent};
+      --card-bg: #{v.$grayTransparent};
+      --additional-card-bg: #{v.$grayTransparent};
+      --button-focus-shadow-color: #{v.$whiteLux};
+      --button-color: #{v.$blackLight};
+      --search-field-bg: #{v.$grayTransparent};
    }
 }

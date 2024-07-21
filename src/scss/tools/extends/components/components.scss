@@ -8,6 +8,6 @@
 
 %bblockstyle {
    border-radius: 10px;
-   border: 2px solid vars.$blackUltraTransparent;
-   background-color: vars.$blackLight;
+   border: 2px solid var(--card-color);
+   background-color: var(--card-bg);
 }

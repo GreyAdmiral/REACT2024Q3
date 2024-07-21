@@ -1,6 +1,6 @@
 .error {
    @extend %bblockstyle;
-   background-color: v.$blackLightTransparent;
+   background-color: var(--additional-card-bg);
    padding: 0.714em;
    flex: 1 1 auto;
    height: 100%;
@@ -11,6 +11,6 @@
       font-family: Coiny, Verdana, Geneva, Tahoma, sans-serif;
       @include m.adaptiveValue('font-size', 49px, 23px);
       text-align: center;
-      color: v.$comicsRad;
+      color: var(--error-color);
    }
 }
