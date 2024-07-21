@@ -1,13 +1,14 @@
-import react from '@vitejs/plugin-react';
-import { defineConfig } from 'vite';
-import tsconfigPaths from 'vite-tsconfig-paths';
+import { devConfig } from './vite.config.dev';
+import { prodConfig } from './vite.config.prod';
 
-export default defineConfig({
-   plugins: [react(), tsconfigPaths()],
-   css: {
-      modules: {
-         localsConvention: 'camelCase',
-      },
-   },
-   base: '',
-});
+type configAttributes = {
+   mode: string;
+};
+
+export default ({ mode }: configAttributes) => {
+   if (mode === 'development') {
+      return devConfig;
+   } else if (mode === 'production') {
+      return prodConfig;
+   }
+};
