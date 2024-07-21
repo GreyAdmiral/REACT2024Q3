@@ -51,5 +51,5 @@
 
 // Эффект плодсветки по контуру изображения
 @mixin luximage($color: #e4e4e4) {
-   filter: drop-shadow(0 0 rem(10px) $color);
+   filter: drop-shadow(0 0 f.rem(10px) $color);
 }

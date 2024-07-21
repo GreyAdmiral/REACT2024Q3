@@ -80,3 +80,9 @@ export type InfoState = {
    isLoading: boolean;
    details: Details;
 };
+
+export type SchemeName = 'light' | 'dark';
+
+export type SchemeState = {
+   colorScheme: string;
+};

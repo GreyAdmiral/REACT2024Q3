@@ -20,6 +20,10 @@ html {
    > * {
       min-width: 0;
    }
+
+   .light & {
+      background: fixed vars.$black url('../images/background-light.jpg') center 0 / cover no-repeat;
+   }
 }
 
 @if (vars.$responsiveType) {
