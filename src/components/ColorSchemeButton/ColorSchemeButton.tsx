@@ -14,7 +14,7 @@ export const ColorSchemeButton = () => {
 
    function writeSchemeName() {
       const newSchemeName = schemeName === 'dark' ? 'light' : 'dark';
-      document.body.className = newSchemeName;
+      document.documentElement.dataset.theme = newSchemeName;
       dispatch(setColorScheme(newSchemeName));
       setSaveScheme(newSchemeName);
    }

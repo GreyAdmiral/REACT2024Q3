@@ -1,11 +1,11 @@
-// ? Подключение кастомного обнуления
-@forward '../tools/zeroing/nullstyle';
+// ? Подключение переменных css
+@forward 'components/rootvars';
 
 // ? Подключение шрифтов
 @forward 'components/fonts';
 
-// ? Подключение переменных css
-@forward 'components/rootvars';
+// ? Подключение кастомного обнуления
+@forward '../tools/zeroing/nullstyle';
 
 // ? Подключение базовых стилей
 @forward 'components/base';

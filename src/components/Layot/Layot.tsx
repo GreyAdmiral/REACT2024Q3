@@ -18,7 +18,7 @@ export const Layot = () => {
    useEffect(() => {
       const schemeName = `${saveScheme ? saveScheme : isAutoDark ? 'dark' : 'light'}`;
       dispatch(setColorScheme(schemeName));
-      document.body.className = schemeName;
+      document.documentElement.dataset.theme = schemeName;
    }, [dispatch, isAutoDark, saveScheme]);
 
    return (

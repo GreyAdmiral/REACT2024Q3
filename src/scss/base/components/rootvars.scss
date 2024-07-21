@@ -1,2 +1,9 @@
+@use '../../tools/vars' as v;
+
 :root {
+   --default-text-color: #{v.$gray};
+
+   &[data-theme='light'] {
+      --default-text-color: #{v.$blackLight};
+   }
 }
