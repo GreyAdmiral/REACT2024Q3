@@ -3,7 +3,6 @@ import webfontDownload from 'vite-plugin-webfont-dl';
 import viteImagemin from 'vite-plugin-imagemin';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import cleanPlugin from 'vite-plugin-clean';
-import { ViteFaviconsPlugin } from 'vite-plugin-favicon';
 
 const srcFolder = `./src`;
 
@@ -15,6 +14,7 @@ export const paths = {
 };
 
 export const prodConfig = {
+   base: '',
    plugins: [
       react(),
       cleanPlugin(),
@@ -52,29 +52,6 @@ export const prodConfig = {
                   },
                },
             ],
-         },
-      }),
-      ViteFaviconsPlugin({
-         logo: './src/assets/favicon.svg', // svg works too!
-         inject: true,
-         favicons: {
-            appName: 'App',
-            appDescription: 'App',
-            developerName: 'Binarion',
-            developerURL: null, // prevent retrieving from the nearest package.json
-            lang: 'ru',
-            theme_color: '#D9D9D9',
-            background: '#D9D9D9',
-            icons: {
-               favicons: true,
-               appleIcon: true,
-               android: true,
-               windows: false,
-               yandex: false,
-               coast: false,
-               firefox: false,
-               appleStartup: false,
-            },
          },
       }),
    ],
