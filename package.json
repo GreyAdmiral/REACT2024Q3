@@ -49,5 +49,5 @@
       "vite-plugin-webfont-dl": "^3.9.4",
       "vite-tsconfig-paths": "^4.3.2"
    },
-   "homepage": "https://rolling-scopes-school.github.io/greyadmiral-REACT2024Q3/hooks-and-routing/"
+   "homepage": "https://rolling-scopes-school.github.io/greyadmiral-REACT2024Q3/app-state-management/"
 }
