@@ -22,6 +22,7 @@
       "react-router-dom": "^6.23.1"
    },
    "devDependencies": {
+      "@axelrindle/vite-plugin-favicon": "^0.2.0",
       "@types/estree": "^1.0.5",
       "@types/react": "^18.3.3",
       "@types/react-dom": "^18.3.0",

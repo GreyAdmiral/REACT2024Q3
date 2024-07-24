@@ -3,13 +3,18 @@ import webfontDownload from 'vite-plugin-webfont-dl';
 import viteImagemin from 'vite-plugin-imagemin';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import cleanPlugin from 'vite-plugin-clean';
+import favicon from '@axelrindle/vite-plugin-favicon';
 
 const srcFolder = `./src`;
+const publicFolder = `./public`;
 
 export const paths = {
    src: {
       spriteIcons: `${srcFolder}/assets/icons/**/*.svg`,
       favIcon: `${srcFolder}/assets/favicon.svg`,
+   },
+   public: {
+      assets: `${publicFolder}/assets`,
    },
 };
 
@@ -52,6 +57,28 @@ export const prodConfig = {
                   },
                },
             ],
+         },
+      }),
+      favicon({
+         source: paths.src.favIcon,
+         output: paths.public.assets,
+         generatorOptions: {
+            path: './assets',
+            appName: 'Kinopoisk Unoficial',
+            appDescription: 'Kinopoisk Unoficial',
+            developerName: 'Binarion',
+            developerURL: '', // prevent retrieving from the nearest package.json
+            lang: 'ru',
+            theme_color: '#D9D9D9',
+            background: '#D9D9D9',
+            icons: {
+               favicons: true,
+               appleIcon: true,
+               android: true,
+               windows: false,
+               yandex: false,
+               appleStartup: false,
+            },
          },
       }),
    ],
