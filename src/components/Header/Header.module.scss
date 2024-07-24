@@ -1,19 +1,13 @@
 .header {
-   min-height: 7.142rem;
-   padding: 0.8571rem;
+   padding: f.rem(10px);
 
    &-body {
       @extend %centerflex;
       @extend %fullwhp;
       text-align: center;
-      color: v.$white;
+      color: var(--text-color, v.$white);
       gap: 0.714em;
       padding-top: f.rem(21px);
-      padding-bottom: f.rem(21px);
-
-      .light & {
-         color: v.$blackLight;
-      }
    }
 
    &-title {
@@ -23,18 +17,17 @@
 
       a {
          display: inline-block;
-         color: v.$comicsRad;
+         color: var(--header-title-text, v.$comicsRad);
          padding: f.rem(5px);
          text-shadow:
-            0 0 0.063em v.$yellow,
-            0 0 0.063em v.$yellow,
-            0 0 0.063em v.$yellow;
+            0 0 0.063em var(--header-title-shadow, v.$yellow),
+            0 0 0.063em var(--header-title-shadow, v.$yellow),
+            0 0 0.063em var(--header-title-shadow, v.$yellow);
          text-transform: uppercase;
 
          @include m.focused {
-            box-shadow: 0 0 5px 3px v.$amberDark;
+            box-shadow: 0 0 5px 3px var(--header-link-shadow, v.$amberDark);
          }
       }
-      // padding-bottom: f.rem(10px);
    }
 }

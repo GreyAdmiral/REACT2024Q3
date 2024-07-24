@@ -1,6 +1,6 @@
 .movies {
    @extend %bblockstyle;
-   background-color: v.$blackLightTransparent;
+   background-color: var(--additional-card-bg, v.$blackLightTransparent);
    padding: 0.714em;
    flex: 1 1 auto;
 

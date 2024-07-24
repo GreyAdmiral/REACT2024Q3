@@ -4,7 +4,7 @@
    @extend %bblockstyle;
    position: sticky;
    top: 0;
-   background-color: v.$blackLightTransparent;
+   background-color: var(--additional-card-bg, v.$blackLightTransparent);
    padding: 0.714em;
    max-width: calc(25% - 2px);
    width: 100%;
@@ -35,7 +35,7 @@
       @include m.adaptiveValue('font-size', 18px, 14px);
       font-variant: small-caps;
       font-weight: bold;
-      color: v.$whiteDark;
+      color: var(--info-title, v.$whiteDark);
       text-align: center;
    }
 
@@ -43,7 +43,7 @@
       align-self: center;
       width: fit-content;
       padding: f.rem(2px);
-      color: v.$whiteDark;
+      color: var(--info-title, v.$whiteDark);
       background-color: transparent;
    }
 
@@ -68,12 +68,13 @@
          padding: 0.143em;
          @include m.adaptiveValue('font-size', 14px, 10px);
          line-height: 1.3;
+         color: var(--default-text-color, v.$gray);
 
          & span {
             @include m.adaptiveValue('font-size', 14px, 10px);
             font-weight: bold;
             line-height: 1.3;
-            color: v.$whiteDark;
+            color: var(--button-color, v.$whiteDark);
 
             @include m.smalltablet {
                word-wrap: break-word;

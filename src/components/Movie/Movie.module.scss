@@ -1,7 +1,7 @@
 .movie {
    @extend %centercolflex;
    align-items: stretch;
-   color: v.$gray;
+   color: var(--default-text-color, v.$gray);
    padding: 0.357em 0 0.714em 0;
    cursor: pointer;
 
@@ -11,7 +11,7 @@
       width: 100%;
       padding: f.rem(5px);
 
-      @media all and (max-width: 400px) {
+      @media all and (max-width: 450px) {
          display: flex;
          justify-content: center;
       }
@@ -29,7 +29,7 @@
 
    &-title {
       @include m.adaptiveValue('font-size', 19px, 15px);
-      color: v.$grayLight;
+      color: var(--movie-title-color, v.$grayLight);
       font-variant: small-caps;
       font-weight: bold;
 
@@ -41,7 +41,7 @@
    &-rating {
       display: flex;
       font-weight: bold;
-      color: v.$whiteLux;
+      color: var(--raiting-color, v.$whiteLux);
       @include m.adaptiveValue('font-size', 12px, 8px);
       border-radius: 10px;
       overflow: hidden;
@@ -53,7 +53,7 @@
 
       &-kip {
          display: inline-block;
-         background-color: v.$yellowClack;
+         background-color: var(--kip-raiting-bg, v.$yellowClack);
          padding: 0.417em 0.833em;
          text-align: center;
          min-width: max-content;
@@ -61,7 +61,7 @@
 
       &-imdb {
          display: inline-block;
-         background-color: v.$orangeBlack;
+         background-color: var(--imdb-raiting-bg, v.$orangeBlack);
          padding: 0.417em 0.833em;
          text-align: center;
          min-width: max-content;
@@ -97,12 +97,12 @@
       &-title {
          @include m.flex(space-around, null, column);
          height: 100%;
-         color: v.$gray;
+         color: var(--default-text-color, v.$gray);
          padding: 0.278em;
          font-size: inherit;
 
          & span {
-            color: v.$whiteDark;
+            color: var(--button-color, v.$whiteDark);
          }
       }
 
@@ -117,7 +117,7 @@
 
       &-body {
          @include m.adaptiveValue('font-size', 15px, 11px);
-         color: v.$gray;
+         color: var(--default-text-color, v.$gray);
          padding: 0.357em;
          overflow: hidden;
          text-overflow: ellipsis;
@@ -127,14 +127,12 @@
          -webkit-line-clamp: 5;
 
          @media all and (max-width: 260px) {
-            // -webkit-line-clamp: 2;
             display: none;
          }
       }
    }
 
    &:not(:last-child) {
-      border-bottom: 1px inset v.$blackUltra;
-      color: v.$whiteDark;
+      border-bottom: 1px inset var(--card-bg, v.$blackUltra);
    }
 }

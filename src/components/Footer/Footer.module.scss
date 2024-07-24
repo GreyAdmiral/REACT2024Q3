@@ -1,5 +1,5 @@
 .footer {
-   color: v.$white;
+   color: var(--text-color, v.$white);
    min-height: 2.083em;
    @extend %centerflex;
    @include m.adaptiveValue('font-size', 24px, 20px);

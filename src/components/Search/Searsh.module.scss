@@ -13,44 +13,44 @@
 
    &-field {
       width: 100%;
-      background-color: var(--search-field-bg);
+      background-color: var(--card-color, v.$blackLight);
       @extend %fontsize;
       padding-left: f.rem(10px);
 
       & input {
          width: 100%;
-         caret-color: var(--button-color);
          text-transform: uppercase;
          outline: none;
-         @include m.colors(var(--button-color), var(--search-field-bg));
          @extend %fontsize;
+         @include m.colors(var(--button-color, v.$whiteDark), var(--card-color, v.$blackLight));
+         caret-color: var(--search-caret-color, v.$whiteDark);
       }
    }
 
    &-button {
       cursor: pointer;
       border-radius: 0 10px 10px 0;
-      border-left: 2px solid var(--button-focus-shadow-color);
+      border-left: 2px solid var(--card-bg, v.$blackUltraTransparent);
       text-transform: uppercase;
       padding: 0.625em;
       @extend %fontsize;
-      @include m.colors(var(--button-color), var(--additional-card-bg));
+      @include m.colors(var(--button-color, v.$whiteDark), var(--additional-card-bg, v.$blackLightTransparent));
       @include m.animatebtn();
 
       @include m.focused {
-         box-shadow: inset 0 0 0.125em 0.125em var(--button-focus-shadow-color);
+         box-shadow: inset 0 0 0.125em 0.125em var(--button-focus-shadow-color, v.$blackUltraTransparent);
       }
 
       &:focus {
-         box-shadow: inset 0 0 0.125em 0.125em var(--button-focus-shadow-color);
+         box-shadow: inset 0 0 0.125em 0.125em var(--button-focus-shadow-color, v.$blackUltraTransparent);
       }
    }
 
    &-error-button {
-      color: var(--error-color);
+      color: var(--error-color, v.$comicsRad);
       font-weight: 600;
       border-radius: 10px 0 0 10px;
-      border-right: 2px solid var(--button-focus-shadow-color);
+      border-right: 2px solid var(--card-bg, v.$blackUltraTransparent);
       border-left: none;
    }
 }
