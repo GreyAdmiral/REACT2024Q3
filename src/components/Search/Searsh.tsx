@@ -1,4 +1,4 @@
-import { createRef, FC, KeyboardEvent, useState } from 'react';
+import { createRef, Dispatch, FC, KeyboardEvent, MutableRefObject, useState } from 'react';
 import { Kinopoisk } from '@api/Kinopoisk';
 import classnames from 'classnames';
 import { useReactPlaceholder } from '@hooks/useReactPlaceholder';
@@ -7,9 +7,9 @@ import { setIsError } from '@store/slices/stateSlice';
 import styles from './Searsh.module.scss';
 
 interface SearchProps {
-   apiRef: React.MutableRefObject<InstanceType<typeof Kinopoisk>>;
+   apiRef: MutableRefObject<InstanceType<typeof Kinopoisk>>;
    localStorageValue: string;
-   setLocalStorageValue: React.Dispatch<React.SetStateAction<string>>;
+   setLocalStorageValue: Dispatch<React.SetStateAction<string>>;
 }
 
 const searchKeyCodes = ['Enter'];

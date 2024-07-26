@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, ChangeEvent } from 'react';
 import { useAppSelector } from '@hooks/useAppSelector';
 import { useAppDispatch } from '@hooks/useAppDispatch';
 import { setSelectedMoviesId } from '@store/slices/selectedSlice';
@@ -15,7 +15,7 @@ export const CustomCheckBox: FC<CustomCheckBoxProps> = ({ movie }) => {
    const dispatch = useAppDispatch();
    const isChecked = selectedMoviesId.some((it) => it.id === movie.kinopoiskId);
 
-   function checkBoxHandler(e: React.ChangeEvent) {
+   function checkBoxHandler(e: ChangeEvent) {
       e.stopPropagation();
       const newChecked = !selectedMoviesId.some((it) => it.id === movie.kinopoiskId);
 

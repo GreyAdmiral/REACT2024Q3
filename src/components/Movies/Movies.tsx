@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react';
+import { FC, MutableRefObject, useEffect, MouseEvent } from 'react';
 import classNames from 'classnames';
 import { Kinopoisk } from '@api/Kinopoisk';
 import { useAppSelector } from '@hooks/useAppSelector';
@@ -15,7 +15,7 @@ import styles from './Movies.module.scss';
 import { getCSVLine } from '@tools/getCSVLine';
 
 interface MoviesArray {
-   apiRef: React.MutableRefObject<InstanceType<typeof Kinopoisk>>;
+   apiRef: MutableRefObject<InstanceType<typeof Kinopoisk>>;
    isInfoVisible: boolean;
 }
 
@@ -27,12 +27,12 @@ export const Movies: FC<MoviesArray> = ({ apiRef, isInfoVisible }) => {
    const dispatch = useAppDispatch();
    const selectedSize = [...selectedMoviesId].length;
 
-   function resetAllCheckBox(e: React.MouseEvent) {
+   function resetAllCheckBox(e: MouseEvent) {
       e.stopPropagation();
       dispatch(resetSelectedMoviesId());
    }
 
-   function downloadSelectedInfo(e: React.MouseEvent) {
+   function downloadSelectedInfo(e: MouseEvent) {
       e.stopPropagation();
 
       const text = selectedMoviesId.reduce((acc, it, idx, arr) => {

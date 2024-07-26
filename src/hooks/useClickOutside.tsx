@@ -1,6 +1,6 @@
-import { useEffect } from 'react';
+import { MutableRefObject, useEffect } from 'react';
 
-export const useClickOutside = (ref: React.MutableRefObject<HTMLTemplateElement | null>, callback: () => void) => {
+export const useClickOutside = (ref: MutableRefObject<HTMLTemplateElement | null>, callback: () => void) => {
    const handleClick = (e: Event) => {
       e.stopPropagation();
       const target = e.target as HTMLTemplateElement;

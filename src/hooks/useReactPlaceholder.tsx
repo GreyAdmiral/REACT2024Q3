@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
+import { Dispatch, RefObject, useEffect, useState } from 'react';
 
 type PlaceholderAttributes = {
-   ref: React.RefObject<HTMLInputElement | HTMLTextAreaElement>;
+   ref: RefObject<HTMLInputElement | HTMLTextAreaElement>;
    placeholder: string;
-   setPlaceholder: React.Dispatch<React.SetStateAction<string>>;
+   setPlaceholder: Dispatch<React.SetStateAction<string>>;
 };
 
 export const useReactPlaceholder = ({ ref, placeholder, setPlaceholder }: PlaceholderAttributes) => {

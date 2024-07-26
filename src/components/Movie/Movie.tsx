@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, MutableRefObject, MouseEvent } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Kinopoisk } from '@api/Kinopoisk';
 import { CustomCheckBox } from '@components/CustomCheckBox/CustomCheckBox';
@@ -10,7 +10,7 @@ import styles from './Movie.module.scss';
 
 type Props = {
    movie: MovieProps;
-   apiRef: React.MutableRefObject<InstanceType<typeof Kinopoisk>>;
+   apiRef: MutableRefObject<InstanceType<typeof Kinopoisk>>;
 };
 
 const separator = ' / ';
@@ -19,7 +19,7 @@ export const Movie: FC<Props> = ({ movie, apiRef }) => {
    const [, setSearchParams] = useSearchParams();
    const dispatch = useAppDispatch();
 
-   function movieClickHandler(e: React.MouseEvent) {
+   function movieClickHandler(e: MouseEvent) {
       e.stopPropagation();
 
       setSearchParams({ info: '1', movie: movie.nameOriginal || 'not found' });

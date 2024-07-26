@@ -1,4 +1,4 @@
-import { FC, useEffect, useMemo, useRef } from 'react';
+import { FC, PropsWithChildren, useEffect, useMemo, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import styles from './CustomNotification.module.scss';
 
@@ -6,7 +6,7 @@ interface CustomNotificationProps {
    isOpenNotification: boolean;
 }
 
-export const CustomNotification: FC<React.PropsWithChildren & CustomNotificationProps> = ({
+export const CustomNotification: FC<PropsWithChildren & CustomNotificationProps> = ({
    isOpenNotification,
    children,
 }) => {
