@@ -18,6 +18,7 @@
    }
 
    &-body {
+      position: relative;
       @include m.flex(null, center);
       @include m.adaptiveValue('font-size', 15px, 11px);
       width: 100%;

@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Kinopoisk } from '@api/Kinopoisk';
+import { CustomCheckBox } from '@components/CustomCheckBox/CustomCheckBox';
 import { useAppDispatch } from '@hooks/useAppDispatch';
 import { getFilteredDetails } from '@tools/getFilteredDetails';
 import { setIsVisible, setDetails, setIsLoading } from '@store/slices/infoSlice';
@@ -32,7 +33,12 @@ export const Movie: FC<Props> = ({ movie, apiRef }) => {
    }
 
    return (
-      <article className={styles.movie} onClick={movieClickHandler}>
+      <article
+         className={styles.movie}
+         onClick={movieClickHandler}
+         id={movie.kinopoiskId}
+         title="Посмотреть подробности"
+      >
          <div className={styles.movieHeader}>
             <h2 className={styles.movieTitle}>{movie.nameRu || movie.nameEn || movie.nameOriginal}</h2>
 
@@ -72,6 +78,8 @@ export const Movie: FC<Props> = ({ movie, apiRef }) => {
                   </div>
                </div>
             </div>
+
+            <CustomCheckBox movie={movie} />
          </div>
       </article>
    );

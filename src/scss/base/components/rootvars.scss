@@ -23,6 +23,9 @@
    --header-link-shadow: #{v.$amberDark};
    --disable-pagination-button: #{v.$gray};
    --theme-button-color: #{v.$amberDark};
+   --notification-color: #{v.$comicsRad};
+   --notification-bg: #{v.$amberDark};
+   --notification-border: #{v.$comicsRad};
 
    &[data-theme='light'] {
       --default-text-color: #{v.$blackLight};

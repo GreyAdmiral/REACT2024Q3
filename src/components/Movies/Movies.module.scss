@@ -25,3 +25,32 @@
       max-width: calc(55% - 2px);
    }
 }
+
+.notification {
+   &-text {
+      padding-bottom: f.rem(5px);
+   }
+   &-buttons {
+      @include m.flex(center);
+      gap: 10px;
+   }
+
+   &-button {
+      @include m.adaptiveValue('font-size', 16px, 13px);
+      color: var(--notification-color, v.$comicsRad);
+      background-color: var(--notification-bg, v.$amberDark);
+      border: 1px solid var(--notification-border, v.$comicsRad);
+      border-radius: 5px;
+      padding: f.rem(5px);
+      @include m.animatebtn;
+      transition:
+         all ease-out 255ms,
+         color 0.4s ease 0s,
+         background-color 0.4s ease 0s;
+
+      @include m.hover {
+         color: var(--notification-bg, v.$amberDark);
+         background-color: var(--notification-border, v.$comicsRad);
+      }
+   }
+}

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 export const useMediaQuery = (media: string) => {
-   const [isMatchMedia, setIsMatchMedia] = useState(window.matchMedia(media).matches);
+   const [isMatchMedia, setIsMatchMedia] = useState<boolean>(window.matchMedia(media).matches);
    function mediaChange(e: MediaQueryListEventInit) {
       if (e.matches) {
          setIsMatchMedia(true);

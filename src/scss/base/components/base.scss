@@ -12,7 +12,6 @@ html {
    background: fixed vars.$black url('../images/background.jpg') center 0 / cover no-repeat;
    font-family: Verdana, Geneva, Tahoma, sans-serif;
    height: 100%;
-   // @include mix.flex(null, null, column);
    @extend %layot;
    overflow-x: hidden;
 

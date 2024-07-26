@@ -86,3 +86,13 @@ export type SchemeName = 'light' | 'dark';
 export type SchemeState = {
    colorScheme: string;
 };
+
+export type SelectedMovie = {
+   id: string;
+   name: string;
+   year: number;
+   type: string;
+   posterUrl: string;
+   countries: string;
+   genres: string;
+};
