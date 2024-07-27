@@ -17,6 +17,7 @@ export const ColorSchemeButton = () => {
       document.documentElement.dataset.theme = newSchemeName;
       dispatch(setColorScheme(newSchemeName));
       setSaveScheme(newSchemeName);
+      (document.activeElement as HTMLTemplateElement).blur();
    }
 
    return (
