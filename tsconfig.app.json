@@ -26,6 +26,7 @@
       "noFallthroughCasesInSwitch": true,
       "noImplicitAny": true,
       "strictPropertyInitialization": false,
+      "types": ["@testing-library/jest-dom"],
 
       /* Paths */
       "baseUrl": ".",

@@ -10,11 +10,11 @@ type PayloadOptions = {
    info: SelectedMovie;
 };
 
-const initialState: InitialSelectedState = {
+export const initialState: InitialSelectedState = {
    selectedMoviesId: [],
 };
 
-const selectedSlice = createSlice({
+export const selectedSlice = createSlice({
    name: 'selected',
    initialState: initialState,
    reducers: {

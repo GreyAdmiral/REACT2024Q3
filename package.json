@@ -12,7 +12,8 @@
       "prettier:fix": "prettier ./src --write",
       "format": "eslint . --fix --color && prettier ./src --write",
       "preview": "vite preview",
-      "prepare": "husky .husky"
+      "prepare": "husky .husky",
+      "test": "vitest --config ./vite.testconfig.ts"
    },
    "dependencies": {
       "@reduxjs/toolkit": "^2.2.6",
@@ -23,6 +24,9 @@
    },
    "devDependencies": {
       "@axelrindle/vite-plugin-favicon": "^0.2.0",
+      "@testing-library/jest-dom": "^6.4.8",
+      "@testing-library/react": "^16.0.0",
+      "@testing-library/user-event": "^14.5.2",
       "@types/estree": "^1.0.5",
       "@types/react": "^18.3.3",
       "@types/react-dom": "^18.3.0",
@@ -38,6 +42,7 @@
       "eslint-plugin-react-hooks": "^4.6.2",
       "eslint-plugin-react-refresh": "^0.4.7",
       "husky": "^9.0.11",
+      "jsdom": "^24.1.1",
       "lint-staged": "^15.2.7",
       "prettier": "^3.3.2",
       "sass": "^1.77.6",
@@ -47,7 +52,8 @@
       "vite-plugin-clean": "^1.0.0",
       "vite-plugin-imagemin": "^0.6.1",
       "vite-plugin-webfont-dl": "^3.9.4",
-      "vite-tsconfig-paths": "^4.3.2"
+      "vite-tsconfig-paths": "^4.3.2",
+      "vitest": "^2.0.4"
    },
    "homepage": "https://rolling-scopes-school.github.io/greyadmiral-REACT2024Q3/app-state-management/"
 }

@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Details, InfoState } from '@typefiles/types';
 
-const initialState: InfoState = {
+export const initialState: InfoState = {
    isVisible: false,
    isLoading: false,
    details: {
