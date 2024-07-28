@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { MovieProps, MoviesState } from '@typefiles/types';
 
-const initialState: MoviesState = {
+export const initialState: MoviesState = {
    activePage: 1,
    movies: [],
    totalPages: null,
@@ -10,7 +10,7 @@ const initialState: MoviesState = {
    isError: false,
 };
 
-const stateSlice = createSlice({
+export const stateSlice = createSlice({
    name: 'state',
    initialState: initialState,
    reducers: {
