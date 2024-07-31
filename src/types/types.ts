@@ -67,7 +67,6 @@ export type MoviesState = {
    movies: MovieProps[];
    totalPages: number | null;
    keywords: string;
-   isLoading: boolean;
    isError: boolean;
 };
 

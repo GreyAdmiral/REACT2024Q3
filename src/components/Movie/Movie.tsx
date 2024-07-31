@@ -1,23 +1,23 @@
-import { FC, MutableRefObject, MouseEvent } from 'react';
+import { FC, MouseEvent } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { Kinopoisk } from '@api/Kinopoisk';
+import { useGetFilmDescriptionMutation } from '@api/filmsApi';
 import { CustomCheckBox } from '@components/CustomCheckBox/CustomCheckBox';
 import { useAppDispatch } from '@hooks/useAppDispatch';
 import { getFilteredDescription } from '@tools/getFilteredDescription';
 import { setIsVisible, setDetails, setIsLoading } from '@store/slices/infoSlice';
-import { MovieDescription, MovieProps } from '@typefiles/types';
+import { MovieProps } from '@typefiles/types';
 import styles from './Movie.module.scss';
 
 type Props = {
    movie: MovieProps;
-   apiRef: MutableRefObject<InstanceType<typeof Kinopoisk>>;
 };
 
 const separator = ' / ';
 
-export const Movie: FC<Props> = ({ movie, apiRef }) => {
+export const Movie: FC<Props> = ({ movie }) => {
    const [, setSearchParams] = useSearchParams();
    const dispatch = useAppDispatch();
+   const [getMovieDescription] = useGetFilmDescriptionMutation();
 
    function movieClickHandler(e: MouseEvent) {
       e.stopPropagation();
@@ -26,7 +26,7 @@ export const Movie: FC<Props> = ({ movie, apiRef }) => {
       dispatch(setIsLoading(true));
       dispatch(setIsVisible(true));
 
-      apiRef.current.getFilmDescription(movie.kinopoiskId).then((data: MovieDescription) => {
+      getMovieDescription(movie.kinopoiskId).then(({ data }) => {
          dispatch(setDetails(getFilteredDescription(data)));
          dispatch(setIsLoading(false));
       });

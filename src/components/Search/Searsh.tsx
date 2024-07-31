@@ -1,5 +1,4 @@
-import { createRef, Dispatch, FC, KeyboardEvent, MutableRefObject, useState } from 'react';
-import { Kinopoisk } from '@api/Kinopoisk';
+import { createRef, Dispatch, FC, KeyboardEvent, useState } from 'react';
 import classnames from 'classnames';
 import { useReactPlaceholder } from '@hooks/useReactPlaceholder';
 import { useAppDispatch } from '@hooks/useAppDispatch';
@@ -7,7 +6,6 @@ import { setIsError } from '@store/slices/stateSlice';
 import styles from './Searsh.module.scss';
 
 interface SearchProps {
-   apiRef: MutableRefObject<InstanceType<typeof Kinopoisk>>;
    localStorageValue: string;
    setLocalStorageValue: Dispatch<React.SetStateAction<string>>;
 }

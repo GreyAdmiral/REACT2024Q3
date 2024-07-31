@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { Outlet } from 'react-router-dom';
 import { Container } from '@components/Container/Container';
 import { ErrorBoundary } from '@components/ErrorBoundary/ErrorBoundary';
@@ -14,6 +14,7 @@ export const Layot = () => {
    const [saveScheme] = useFastLocalStorage('userScheme');
    const isAutoDark = useMediaQuery('(prefers-color-scheme: dark)');
    const dispatch = useAppDispatch();
+   const headerRef = useRef<HTMLTemplateElement | null>(null);
 
    useEffect(() => {
       const schemeName = `${saveScheme ? saveScheme : isAutoDark ? 'dark' : 'light'}`;
@@ -23,12 +24,12 @@ export const Layot = () => {
 
    return (
       <>
-         <Header />
+         <Header headerRef={headerRef} />
          <div className={styles.main}>
             <Container className={styles.main}>
                <div className={styles.mainBody}>
                   <ErrorBoundary>
-                     <Outlet />
+                     <Outlet context={headerRef} />
                   </ErrorBoundary>
                </div>
             </Container>

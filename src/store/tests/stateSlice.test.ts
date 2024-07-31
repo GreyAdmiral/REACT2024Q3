@@ -3,7 +3,6 @@ import stateSliceReducer, {
    initialState,
    setActivePage,
    setIsError,
-   setIsLoading,
    setKeywords,
    setMovies,
    setTotalPages,
@@ -35,13 +34,6 @@ describe('Тест среза stateSlice', () => {
 
       expect(initialState.keywords).toEqual('');
       expect(state.keywords).toEqual('Lorem ipsum');
-   });
-
-   test('Изменение состояния загрузки', () => {
-      const state = stateSliceReducer(initialState, setIsLoading(true));
-
-      expect(initialState.isLoading).toEqual(false);
-      expect(state.isLoading).toEqual(true);
    });
 
    test('Изменение состояния ошибки', () => {

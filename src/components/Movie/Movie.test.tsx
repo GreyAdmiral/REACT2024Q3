@@ -1,7 +1,6 @@
 import { beforeEach, describe, expect, test } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { Movie } from './Movie';
-import { Kinopoisk } from '@api/Kinopoisk';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import store from '../../store';
@@ -30,18 +29,12 @@ const movie = {
    posterUrlPreview: '',
 };
 
-class FakeKinopoisk extends Kinopoisk {}
-
-const apiClass = {
-   current: new FakeKinopoisk(),
-};
-
 describe('Тесты компонента с фильмом', () => {
    beforeEach(() => {
       render(
          <Provider store={store}>
             <Router>
-               <Movie movie={movie} apiRef={apiClass} />
+               <Movie movie={movie} />
             </Router>
          </Provider>
       );

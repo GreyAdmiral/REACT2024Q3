@@ -2,16 +2,9 @@ import { beforeEach, describe, expect, test, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import { Searsh } from './Searsh';
-import { Kinopoisk } from '@api/Kinopoisk';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from '../../store';
-
-class FakeKinopoisk extends Kinopoisk {}
-
-const apiClass = {
-   current: new FakeKinopoisk(),
-};
 
 const localStorageValue = '';
 const testUserValue = 'Lorem ipsum';
@@ -22,11 +15,7 @@ describe('Тесты поиска', () => {
       render(
          <Provider store={store}>
             <Router>
-               <Searsh
-                  apiRef={apiClass}
-                  localStorageValue={localStorageValue}
-                  setLocalStorageValue={setLocalStorageValue}
-               />
+               <Searsh localStorageValue={localStorageValue} setLocalStorageValue={setLocalStorageValue} />
             </Router>
          </Provider>
       );

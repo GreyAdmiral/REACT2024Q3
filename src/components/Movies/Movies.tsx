@@ -1,31 +1,31 @@
 import { FC, MutableRefObject, useEffect, MouseEvent } from 'react';
+import { useOutletContext } from 'react-router-dom';
+import { useGetFilmsQuery } from '@api/filmsApi';
 import classNames from 'classnames';
-import { Kinopoisk } from '@api/Kinopoisk';
 import { useAppSelector } from '@hooks/useAppSelector';
 import { useAppDispatch } from '@hooks/useAppDispatch';
-import { setIsLoading, setMovies, setTotalPages } from '@store/slices/stateSlice';
+import { setMovies, setTotalPages } from '@store/slices/stateSlice';
 import { setIsVisible } from '@store/slices/infoSlice';
 import { Movie } from '@components/Movie/Movie';
 import { Loader } from '@components/Loader/Loader';
 import { CustomNotification } from '@components/CustomNotification/CustomNotification';
 import { resetSelectedMoviesId } from '@store/slices/selectedSlice';
-import { getFilteredFilms } from '@tools/getFilteredFilms';
-import { MoviesProps } from '@typefiles/types';
-import styles from './Movies.module.scss';
 import { getCSVLine } from '@tools/getCSVLine';
+import { getFilteredFilms } from '@tools/getFilteredFilms';
+import styles from './Movies.module.scss';
 
 interface MoviesArray {
-   apiRef: MutableRefObject<InstanceType<typeof Kinopoisk>>;
    isInfoVisible: boolean;
 }
 
-export const Movies: FC<MoviesArray> = ({ apiRef, isInfoVisible }) => {
-   const { movies, isError } = useAppSelector((state) => state.state);
-   const isLoading = useAppSelector((state) => state.state.isLoading);
-   const selectedMoviesId = useAppSelector((state) => state.selected.selectedMoviesId);
+export const Movies: FC<MoviesArray> = ({ isInfoVisible }) => {
    const { activePage, keywords } = useAppSelector((state) => state.state);
+   const { data = {}, isLoading, isSuccess } = useGetFilmsQuery({ activePage, keywords });
+   const { movies, isError } = useAppSelector((state) => state.state);
+   const selectedMoviesId = useAppSelector((state) => state.selected.selectedMoviesId);
    const dispatch = useAppDispatch();
    const selectedSize = [...selectedMoviesId].length;
+   const header: MutableRefObject<HTMLTemplateElement> = useOutletContext();
 
    function resetAllCheckBox(e: MouseEvent) {
       e.stopPropagation();
@@ -62,24 +62,30 @@ export const Movies: FC<MoviesArray> = ({ apiRef, isInfoVisible }) => {
    }, [dispatch, isError]);
 
    useEffect(() => {
-      dispatch(setIsLoading(true));
+      header.current.scrollIntoView(true);
 
-      apiRef.current.getFilms({ activePage: activePage, keywords: keywords }).then((data: MoviesProps) => {
-         dispatch(setMovies(getFilteredFilms(data.items)));
+      if (isSuccess) {
+         const films = getFilteredFilms(data.items);
+
+         dispatch(setMovies(films));
          dispatch(setTotalPages(data.totalPages));
-         dispatch(setIsLoading(false));
-      });
-   }, [activePage, apiRef, dispatch, keywords]);
+      }
+
+      return () => {
+         window.scroll(0, 0);
+      };
+   }, [data.items, data.totalPages, dispatch, header, isSuccess]);
 
    return (
       <section
          className={classNames(styles.movies, { [styles.half]: isInfoVisible, [styles.moviesCenter]: isLoading })}
+         data-page={activePage + keywords}
       >
          {!isLoading && (
             <>
                {!movies.length && <span className={styles.moviesNotFound}>Ничего не найдено</span>}
                {movies.map((movie) => (
-                  <Movie key={movie.kinopoiskId} movie={movie} apiRef={apiRef} />
+                  <Movie key={movie.kinopoiskId} movie={movie} />
                ))}
             </>
          )}

@@ -6,7 +6,6 @@ export const initialState: MoviesState = {
    movies: [],
    totalPages: null,
    keywords: '',
-   isLoading: false,
    isError: false,
 };
 
@@ -30,15 +29,11 @@ const stateSlice = createSlice({
          state.keywords = action.payload;
       },
 
-      setIsLoading(state, action: PayloadAction<boolean>) {
-         state.isLoading = action.payload;
-      },
-
       setIsError(state, action: PayloadAction<boolean>) {
          state.isError = action.payload;
       },
    },
 });
 
-export const { setActivePage, setMovies, setTotalPages, setKeywords, setIsLoading, setIsError } = stateSlice.actions;
+export const { setActivePage, setMovies, setTotalPages, setKeywords, setIsError } = stateSlice.actions;
 export default stateSlice.reducer;

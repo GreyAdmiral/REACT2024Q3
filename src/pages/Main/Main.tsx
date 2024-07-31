@@ -1,6 +1,5 @@
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
-import { Kinopoisk } from '@api/Kinopoisk';
 import { Movies } from '@components/Movies/Movies';
 import { Searsh } from '@components/Search/Searsh';
 import { Pagination } from '@components/Pagination/Pagination';
@@ -13,9 +12,8 @@ import styles from './Main.module.scss';
 
 export const Main = () => {
    const { number } = useParams();
-   const apiRef = useRef<InstanceType<typeof Kinopoisk>>(new Kinopoisk());
    const { isVisible: isInfoVisible } = useAppSelector((state) => state.info);
-   const isLoading = useAppSelector((state) => state.state.isLoading);
+   const { movies } = useAppSelector((state) => state.state);
    const dispatch = useAppDispatch();
    const [localStorageValue, setLocalStorageValue] = useLocalStorage('keywords');
    const [, setSearchParams] = useSearchParams();
@@ -33,14 +31,14 @@ export const Main = () => {
 
    return (
       <>
-         <Searsh apiRef={apiRef} localStorageValue={localStorageValue} setLocalStorageValue={setLocalStorageValue} />
+         <Searsh localStorageValue={localStorageValue} setLocalStorageValue={setLocalStorageValue} />
          <div className={styles.content}>
-            <Movies apiRef={apiRef} isInfoVisible={isInfoVisible} />
+            <Movies isInfoVisible={isInfoVisible} />
 
             {isInfoVisible && <MovieInfo />}
          </div>
 
-         {!isLoading && <Pagination />}
+         {movies.length && <Pagination />}
       </>
    );
 };
