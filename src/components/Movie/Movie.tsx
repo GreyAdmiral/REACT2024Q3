@@ -3,9 +3,9 @@ import { useSearchParams } from 'react-router-dom';
 import { Kinopoisk } from '@api/Kinopoisk';
 import { CustomCheckBox } from '@components/CustomCheckBox/CustomCheckBox';
 import { useAppDispatch } from '@hooks/useAppDispatch';
-import { getFilteredDetails } from '@tools/getFilteredDetails';
+import { getFilteredDescription } from '@tools/getFilteredDescription';
 import { setIsVisible, setDetails, setIsLoading } from '@store/slices/infoSlice';
-import { MovieInfoStruct, MovieProps } from '@typefiles/types';
+import { MovieDescription, MovieProps } from '@typefiles/types';
 import styles from './Movie.module.scss';
 
 type Props = {
@@ -22,12 +22,12 @@ export const Movie: FC<Props> = ({ movie, apiRef }) => {
    function movieClickHandler(e: MouseEvent) {
       e.stopPropagation();
 
-      setSearchParams({ info: '1', movie: movie.nameOriginal || 'not found' });
+      setSearchParams({ info: '1', movie: movie.nameEn || movie.nameOriginal || 'not found' });
       dispatch(setIsLoading(true));
       dispatch(setIsVisible(true));
 
-      apiRef.current.getFilmInfo(movie.nameOriginal || movie.nameEn || movie.nameRu).then((data: MovieInfoStruct) => {
-         dispatch(setDetails(getFilteredDetails(data)));
+      apiRef.current.getFilmDescription(movie.kinopoiskId).then((data: MovieDescription) => {
+         dispatch(setDetails(getFilteredDescription(data)));
          dispatch(setIsLoading(false));
       });
    }

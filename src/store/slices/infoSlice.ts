@@ -1,15 +1,17 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Details, InfoState } from '@typefiles/types';
+import { InfoState, MovieDetails } from '@typefiles/types';
 
 export const initialState: InfoState = {
    isVisible: false,
    isLoading: false,
    details: {
-      Title: '',
-      Runtime: '',
-      Plot: '',
-      Awards: '',
-      Poster: '',
+      nameRu: '',
+      nameEn: '',
+      nameOriginal: '',
+      posterUrl: '',
+      description: '',
+      shortDescription: '',
+      webUrl: '',
    },
 };
 
@@ -25,7 +27,7 @@ const infoSlice = createSlice({
          state.isLoading = action.payload;
       },
 
-      setDetails(state, action: PayloadAction<Details>) {
+      setDetails(state, action: PayloadAction<MovieDetails>) {
          state.details = action.payload;
       },
    },

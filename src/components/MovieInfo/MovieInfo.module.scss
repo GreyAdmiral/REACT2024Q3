@@ -1,3 +1,15 @@
+%link-effects {
+   transition: color 0.4s ease 0s;
+
+   @include m.hover {
+      color: var(--info-link-color-hover, v.$orangeBlack);
+   }
+
+   @include m.focused {
+      color: var(--info-link-color-hover, v.$orangeBlack);
+   }
+}
+
 .movie-info {
    @include m.flex(null, null, column);
    row-gap: f.rem(10px);
@@ -5,11 +17,11 @@
    position: sticky;
    top: 0;
    background-color: var(--additional-card-bg, v.$blackLightTransparent);
-   padding: 0.714em;
+   padding: f.rem(15px) f.rem(10px);
    max-width: calc(25% - 2px);
    width: 100%;
    height: fit-content;
-   min-height: 14%;
+   min-height: 12%;
    overflow-x: hidden;
    overflow-y: auto;
 
@@ -27,8 +39,7 @@
 
    &-header {
       @include m.flex(null, null, column);
-      row-gap: f.rem(10px);
-      padding: f.rem(5px) 0;
+      row-gap: f.rem(8px);
    }
 
    &-title {
@@ -45,6 +56,7 @@
       padding: f.rem(2px);
       color: var(--info-title, v.$whiteDark);
       background-color: transparent;
+      @extend %link-effects;
    }
 
    &-body {
@@ -69,6 +81,12 @@
          @include m.adaptiveValue('font-size', 14px, 10px);
          line-height: 1.3;
          color: var(--default-text-color, v.$gray);
+         overflow: hidden;
+         text-overflow: ellipsis;
+         display: -webkit-box;
+         -webkit-box-orient: vertical;
+         line-clamp: 5;
+         -webkit-line-clamp: 5;
 
          & span {
             @include m.adaptiveValue('font-size', 14px, 10px);
@@ -81,6 +99,13 @@
             }
          }
       }
+   }
+
+   &-url {
+      @include m.adaptiveValue('font-size', 14px, 10px);
+      text-align: center;
+      color: var(--footer-link-color, v.$amberDark);
+      @extend %link-effects;
    }
 
    &-center {

@@ -12,11 +12,13 @@ import styles from './MovieInfo.module.scss';
 import image from '@assets/images/loading.svg';
 
 const defaultDetails = {
-   Title: '',
-   Runtime: '',
-   Plot: '',
-   Awards: '',
-   Poster: '',
+   nameRu: '',
+   nameEn: '',
+   nameOriginal: '',
+   posterUrl: '',
+   description: '',
+   shortDescription: '',
+   webUrl: '',
 } as const;
 
 const notFound = {
@@ -27,30 +29,19 @@ const notFound = {
 export const MovieInfo = () => {
    const navigate = useNavigate();
    const asideRef = useRef(null);
-   const { Title, Awards, Runtime, Plot, Poster, Error } = useAppSelector((state) => state.info.details);
+   const { nameRu, nameEn, nameOriginal, posterUrl, description, shortDescription, webUrl } = useAppSelector(
+      (state) => state.info.details
+   );
    const isLoading = useAppSelector((state) => state.info.isLoading);
    const activePage = useAppSelector((state) => state.state.activePage);
    const dispatch = useAppDispatch();
+   const title = nameRu || nameEn || nameOriginal;
+   const validatedTitle = isExists(title) ? title : notFound.title;
    const outClick = () => {
       dispatch(setIsVisible(false));
       dispatch(setDetails(defaultDetails));
       navigate(`${AppRoutes.PAGE_ROUTE}/${activePage}`);
    };
-
-   const infoArray = [
-      {
-         param: Awards,
-         text: 'Награды: ',
-      },
-      {
-         param: Runtime,
-         text: 'Продолжительность: ',
-      },
-      {
-         param: Plot,
-         text: 'Описание: ',
-      },
-   ].filter((obj) => isExists(obj.param));
 
    useClickOutside(asideRef, outClick);
 
@@ -59,24 +50,28 @@ export const MovieInfo = () => {
          {!isLoading && (
             <>
                <header className={styles.movieInfoHeader}>
-                  <button className={styles.movieInfoClose} onClick={outClick}>
+                  <button className={styles.movieInfoClose} onClick={outClick} title="Скрыть подробности">
                      {'>>>>>'}
                   </button>
 
-                  <h2 className={styles.movieInfoTitle}>{isExists(Title) ? Title : Error || notFound.title}</h2>
+                  <h2 className={styles.movieInfoTitle}>{validatedTitle}</h2>
                </header>
 
                <div className={styles.movieInfoImage}>
-                  <img src={isExists(Poster) ? Poster : notFound.image} alt={Title} />
+                  <img src={isExists(posterUrl) ? posterUrl : notFound.image} alt={validatedTitle} />
                </div>
 
                <div className={styles.movieInfoBody}>
-                  {infoArray.map((obj) => (
-                     <div key={obj.param} className={styles.movieInfoTextRow}>
-                        <span>{obj.text}</span>
-                        {obj.param}
+                  {(description || shortDescription) && (
+                     <div className={styles.movieInfoTextRow}>
+                        <span>Описание: </span>
+                        {description || shortDescription}
                      </div>
-                  ))}
+                  )}
+
+                  <a className={styles.movieInfoUrl} href={webUrl} target="_blank" title="Найти на «Кинопоиск»">
+                     Подробнее на «Кинопоиск»
+                  </a>
                </div>
             </>
          )}

@@ -20,6 +20,48 @@ export type MovieProps = {
    genres: genre[];
 };
 
+export interface MovieDescription extends MovieProps {
+   kinopoiskHDId: '' | null;
+   coverUrl: '' | null;
+   logoUrl: '' | null;
+   reviewsCount: number;
+   ratingGoodReview: number | null;
+   ratingGoodReviewVoteCount: number | null;
+   ratingKinopoiskVoteCount: number | null;
+   ratingImdbVoteCount: number | null;
+   ratingFilmCritics: number | null;
+   ratingFilmCriticsVoteCount: number | null;
+   ratingAwait: number | null;
+   ratingAwaitCount: number | null;
+   ratingRfCritics: number | null;
+   ratingRfCriticsVoteCount: number | null;
+   webUrl: string;
+   filmLength: number | null;
+   slogan: string | null;
+   description: string | null;
+   shortDescription: string | null;
+   editorAnnotation: string | null;
+   isTicketsAvailable: boolean;
+   productionStatus: string | null;
+   ratingMpaa: number | null;
+   ratingAgeLimits: number | null;
+   startYear: number | null;
+   endYear: number | null;
+   serial: boolean;
+   shortFilm: boolean;
+   completed: boolean;
+   hasImax: boolean;
+   has3D: boolean;
+   lastSync: string | null;
+}
+
+export type MovieDetails = Pick<
+   MovieDescription,
+   'nameRu' | 'nameEn' | 'nameOriginal' | 'posterUrl' | 'description' | 'shortDescription' | 'webUrl'
+> & {
+   Error?: '';
+};
+
 export type MoviesState = {
    activePage: number;
    movies: MovieProps[];
@@ -37,48 +79,10 @@ type genre = {
    genre: string;
 };
 
-export type MovieInfoStruct = {
-   Title: string;
-   Year: string;
-   Rated: string;
-   Released: string;
-   Runtime: string;
-   Genre: string;
-   Director: string;
-   Writer: string;
-   Actors: string;
-   Plot: string;
-   Language: string;
-   Country: string;
-   Awards: string;
-   Poster: string;
-   Metascore: string;
-   imdbRating: string;
-   imdbVotes: string;
-   imdbID: string;
-   Type: string;
-   DVD: string;
-   BoxOffice: string;
-   Production: string;
-   Website: string;
-   Response: string;
-   Ratings: infoRaiting[];
-   Error?: string;
-};
-
-type infoRaiting = {
-   Source: string;
-   Value: string;
-};
-
-export type Details = Pick<MovieInfoStruct, 'Title' | 'Awards' | 'Runtime' | 'Plot' | 'Poster'> & {
-   Error?: '';
-};
-
 export type InfoState = {
    isVisible: boolean;
    isLoading: boolean;
-   details: Details;
+   details: MovieDetails;
 };
 
 export type SchemeName = 'light' | 'dark';

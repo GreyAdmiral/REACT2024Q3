@@ -23,9 +23,9 @@ describe('Тест среза infoSlice', () => {
    });
 
    test('Информация о фильме', () => {
-      const state = infoSliceReducer(initialState, setDetails({ ...initialState.details, Title: 'Lorem ipsum' }));
+      const state = infoSliceReducer(initialState, setDetails({ ...initialState.details, nameEn: 'Lorem ipsum' }));
 
-      expect(initialState.details.Title).toEqual('');
-      expect(state.details.Title).toEqual('Lorem ipsum');
+      expect(initialState.details.nameEn).toEqual('');
+      expect(state.details.nameEn).toEqual('Lorem ipsum');
    });
 });

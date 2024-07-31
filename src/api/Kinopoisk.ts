@@ -8,8 +8,6 @@ type GetFilmsArguments = {
 export class Kinopoisk {
    protected url: string;
    protected key: string;
-   protected infoUrl: string;
-   protected infoKey: string;
    protected header: {
       method: string;
       headers: Record<string, string>;
@@ -17,9 +15,7 @@ export class Kinopoisk {
 
    constructor() {
       this.url = 'https://kinopoiskapiunofficial.tech/api/v2.2/films';
-      this.infoUrl = 'https://www.omdbapi.com';
       this.key = import.meta.env.VITE_API_KEY;
-      this.infoKey = import.meta.env.VITE_INFO_API_KEY;
       this.header = {
          method: 'GET',
          headers: {
@@ -58,11 +54,11 @@ export class Kinopoisk {
       }
    }
 
-   async getFilmInfo(movieName: string) {
-      const url = `${this.infoUrl}/?apikey=${this.infoKey}&i=tt3896198&t=${encodeURIComponent(movieName)}`;
+   async getFilmDescription(id: string) {
+      const url = `${this.url}/${id}`;
 
       try {
-         const request = await fetch(url);
+         const request = await fetch(url, this.header);
 
          if (!request.ok) {
             throw Error(`${getErrorInfo(request.status)} Status Code: ${request.status}`);

@@ -14,5 +14,5 @@ h2 {
 }
 
 ::selection {
-   background-color: v.$blackUltraTransparent;
+   background-color: var(--selection-bg);
 }

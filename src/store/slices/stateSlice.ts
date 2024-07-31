@@ -10,7 +10,7 @@ export const initialState: MoviesState = {
    isError: false,
 };
 
-export const stateSlice = createSlice({
+const stateSlice = createSlice({
    name: 'state',
    initialState: initialState,
    reducers: {

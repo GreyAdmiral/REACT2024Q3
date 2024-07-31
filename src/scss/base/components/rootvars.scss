@@ -27,6 +27,8 @@
    --notification-bg: #{v.$amberDark};
    --notification-border: #{v.$comicsRad};
    --footer-link-color: #{v.$amberDark};
+   --info-link-color-hover: #{v.$orangeBlack};
+   --selection-bg: #{v.$blackUltraTransparent};
 
    &[data-theme='light'] {
       --default-text-color: #{v.$blackLight};
@@ -48,5 +50,7 @@
       --disable-pagination-button: #{v.$grayMiddle};
       --theme-button-color: #{v.$orangeBlack};
       --footer-link-color: #{v.$orangeBlack};
+      --info-link-color-hover: #{v.$comicsRad};
+      --selection-bg: #{v.$grayMiddle};
    }
 }

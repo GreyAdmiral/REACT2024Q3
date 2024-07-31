@@ -14,7 +14,7 @@ export const initialState: InitialSelectedState = {
    selectedMoviesId: [],
 };
 
-export const selectedSlice = createSlice({
+const selectedSlice = createSlice({
    name: 'selected',
    initialState: initialState,
    reducers: {
