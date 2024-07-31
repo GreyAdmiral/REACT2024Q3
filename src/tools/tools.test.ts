@@ -1,6 +1,7 @@
 import { describe, expect, test } from 'vitest';
 import { getCSVLine } from './getCSVLine';
 import { getErrorInfo } from './getErrorInfo';
+import { getFilteredFilms } from './getFilteredFilms';
 import { getSchemeIconId } from './getSchemeIconId';
 import { getSelectedInfo } from './getSelectedInfo';
 import { isExists } from './isExist';
@@ -32,6 +33,93 @@ describe('Тесты вспомогательных функций', () => {
       expect(getErrorInfo(429)).toBe('Too many requests.');
       expect(getErrorInfo(500)).toBe('Looks like there was a problem.');
       expect(getErrorInfo('default')).toBe('Looks like there was a problem.');
+   });
+
+   test('Тест функции getFilteredFilms', () => {
+      const movies: MovieProps[] = [
+         {
+            kinopoiskId: '1252447',
+            imdbId: 'tt9257638',
+            nameRu: 'Лорды раздевалки',
+            nameEn: '',
+            nameOriginal: 'Lords of the Lockerroom',
+            countries: [
+               {
+                  country: 'США',
+               },
+            ],
+            genres: [
+               {
+                  genre: 'спорт',
+               },
+               {
+                  genre: 'для взрослых',
+               },
+            ],
+            ratingKinopoisk: 9.4,
+            ratingImdb: 9.4,
+            year: 1999,
+            type: 'VIDEO',
+            posterUrl: 'https://kinopoiskapiunofficial.tech/images/posters/kp/1252447.jpg',
+            posterUrlPreview: 'https://kinopoiskapiunofficial.tech/images/posters/kp_small/1252447.jpg',
+         },
+         {
+            kinopoiskId: '1201206',
+            imdbId: '',
+            nameRu: '',
+            nameEn: '',
+            nameOriginal: 'BTS: Blood Sweat & Tears',
+            countries: [
+               {
+                  country: 'Корея Южная',
+               },
+            ],
+            genres: [
+               {
+                  genre: 'музыка',
+               },
+               {
+                  genre: 'короткометражка',
+               },
+            ],
+            ratingKinopoisk: 9.4,
+            ratingImdb: null,
+            year: 2016,
+            type: 'VIDEO',
+            posterUrl: 'https://kinopoiskapiunofficial.tech/images/posters/kp/1201206.jpg',
+            posterUrlPreview: 'https://kinopoiskapiunofficial.tech/images/posters/kp_small/1201206.jpg',
+         },
+      ];
+      const filteredMovies = getFilteredFilms(movies);
+
+      expect(filteredMovies).toEqual([
+         {
+            kinopoiskId: '1201206',
+            imdbId: '',
+            nameRu: '',
+            nameEn: '',
+            nameOriginal: 'BTS: Blood Sweat & Tears',
+            countries: [
+               {
+                  country: 'Корея Южная',
+               },
+            ],
+            genres: [
+               {
+                  genre: 'музыка',
+               },
+               {
+                  genre: 'короткометражка',
+               },
+            ],
+            ratingKinopoisk: 9.4,
+            ratingImdb: null,
+            year: 2016,
+            type: 'VIDEO',
+            posterUrl: 'https://kinopoiskapiunofficial.tech/images/posters/kp/1201206.jpg',
+            posterUrlPreview: 'https://kinopoiskapiunofficial.tech/images/posters/kp_small/1201206.jpg',
+         },
+      ]);
    });
 
    test('Тест функции getSchemeIconId', () => {
