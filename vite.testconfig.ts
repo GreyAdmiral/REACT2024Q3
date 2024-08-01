@@ -8,6 +8,10 @@ export default defineConfig({
       globals: true,
       environment: 'jsdom',
       setupFiles: 'vitest.setup.ts',
+      coverage: {
+         provider: 'v8',
+         exclude: ['**/dev.js', '**/prod.js', '**/paths.js', '**/postcss.config.js', '**/.eslintrc.cjs'],
+      },
    },
    base: '',
    css: {

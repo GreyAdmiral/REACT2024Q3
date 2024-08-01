@@ -13,7 +13,8 @@
       "format": "eslint . --fix --color && prettier ./src --write",
       "preview": "vite preview",
       "prepare": "husky .husky",
-      "test": "vitest --config ./vite.testconfig.ts"
+      "test": "vitest --config ./vite.testconfig.ts",
+      "coverage": "vitest --coverage --config ./vite.testconfig.ts"
    },
    "dependencies": {
       "@reduxjs/toolkit": "^2.2.6",
@@ -33,6 +34,7 @@
       "@typescript-eslint/eslint-plugin": "^7.13.1",
       "@typescript-eslint/parser": "^7.13.1",
       "@vitejs/plugin-react": "^4.3.1",
+      "@vitest/coverage-v8": "^2.0.5",
       "autoprefixer": "^10.4.19",
       "classnames": "^2.5.1",
       "eslint": "^8.57.0",
