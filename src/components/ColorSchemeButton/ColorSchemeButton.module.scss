@@ -1,5 +1,5 @@
 .scheme {
-   &-button {
+   &_button {
       @extend %centerflex;
       background: none;
       @include m.adaptiveValue('font-size', 49px, 23px);

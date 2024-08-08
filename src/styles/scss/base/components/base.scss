@@ -9,7 +9,7 @@ html {
 }
 
 .wrapper {
-   background: fixed vars.$black url('../images/background.jpg') center 0 / cover no-repeat;
+   background: fixed vars.$black url('/images/background.jpg') center 0 / cover no-repeat;
    font-family: Verdana, Geneva, Tahoma, sans-serif;
    height: 100%;
    @extend %layot;
@@ -21,14 +21,14 @@ html {
    }
 
    [data-theme='light'] & {
-      background: fixed vars.$gray url('../images/background-light.jpg') center 0 / cover no-repeat;
+      background: fixed vars.$gray url('/images/background-light.jpg') center 0 / cover no-repeat;
    }
 }
 
 @if (vars.$responsiveType) {
    // Отзывчивая верстка без брейк-поинтов
    .container,
-   [class*='-container'] {
+   [class*='_container'] {
       @if (vars.$container>0) {
          box-sizing: content-box;
          max-width: f.rem(vars.$container);
@@ -45,7 +45,7 @@ html {
 } @else {
    // Верстка адаптива вручную по брейк-поинтам
    .container,
-   [class*='-container'] {
+   [class*='_container'] {
       margin: 0 auto;
       @if (vars.$container>0) {
          max-width: f.rem(vars.$container);

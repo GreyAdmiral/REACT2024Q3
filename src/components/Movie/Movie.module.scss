@@ -5,7 +5,7 @@
    padding: 0.357em 0 0.714em 0;
    cursor: pointer;
 
-   &-header {
+   &_header {
       @extend %centerflex;
       justify-content: space-between;
       width: 100%;
@@ -17,7 +17,7 @@
       }
    }
 
-   &-body {
+   &_body {
       position: relative;
       @include m.flex(null, center);
       @include m.adaptiveValue('font-size', 15px, 11px);
@@ -28,7 +28,7 @@
       }
    }
 
-   &-title {
+   &_title {
       @include m.adaptiveValue('font-size', 19px, 15px);
       color: var(--movie-title-color, v.$grayLight);
       font-variant: small-caps;
@@ -39,7 +39,7 @@
       }
    }
 
-   &-rating {
+   &_rating {
       display: flex;
       font-weight: bold;
       color: var(--raiting-color, v.$whiteLux);
@@ -52,7 +52,7 @@
          text-transform: uppercase;
       }
 
-      &-kip {
+      &_kip {
          display: inline-block;
          background-color: var(--kip-raiting-bg, v.$yellowClack);
          padding: 0.417em 0.833em;
@@ -60,7 +60,7 @@
          min-width: max-content;
       }
 
-      &-imdb {
+      &_imdb {
          display: inline-block;
          background-color: var(--imdb-raiting-bg, v.$orangeBlack);
          padding: 0.417em 0.833em;
@@ -73,7 +73,7 @@
       }
    }
 
-   &-image {
+   &_image {
       @include m.responsiveImage(true);
       padding-bottom: f.em(195px, 15px);
       padding-left: f.em(138px, 15px);
@@ -87,7 +87,7 @@
       }
    }
 
-   &-text {
+   &_text {
       @extend %columnflex;
       align-self: stretch;
       min-height: 100%;
@@ -95,7 +95,7 @@
       line-height: 1.6;
       font-size: inherit;
 
-      &-title {
+      &_title {
          @include m.flex(space-around, null, column);
          height: 100%;
          color: var(--default-text-color, v.$gray);
@@ -107,7 +107,7 @@
          }
       }
 
-      &-row {
+      &_row {
          font-size: inherit;
          padding: 0.143em;
 
@@ -116,7 +116,7 @@
          }
       }
 
-      &-body {
+      &_body {
          @include m.adaptiveValue('font-size', 15px, 11px);
          color: var(--default-text-color, v.$gray);
          padding: 0.357em;

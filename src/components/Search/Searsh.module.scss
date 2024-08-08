@@ -11,7 +11,7 @@
    padding: f.rem(5px) 0;
    overflow: hidden;
 
-   &-field {
+   &_field {
       width: 100%;
       background-color: var(--card-color, v.$blackLight);
       @extend %fontsize;
@@ -27,7 +27,7 @@
       }
    }
 
-   &-button {
+   &_button {
       cursor: pointer;
       border-radius: 0 10px 10px 0;
       border-left: 2px solid var(--card-bg, v.$blackUltraTransparent);
@@ -40,13 +40,9 @@
       @include m.focused {
          box-shadow: inset 0 0 0.125em 0.125em var(--button-focus-shadow-color, v.$blackUltraTransparent);
       }
-
-      &:focus {
-         box-shadow: inset 0 0 0.125em 0.125em var(--button-focus-shadow-color, v.$blackUltraTransparent);
-      }
    }
 
-   &-error-button {
+   &_error_button {
       color: var(--error-color, v.$comicsRad);
       font-weight: 600;
       border-radius: 10px 0 0 10px;

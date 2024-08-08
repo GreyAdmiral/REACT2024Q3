@@ -10,7 +10,7 @@
    }
 }
 
-.movie-info {
+.movie_info {
    @include m.flex(null, null, column);
    row-gap: f.rem(10px);
    @extend %bblockstyle;
@@ -37,12 +37,12 @@
       max-width: calc(45% - 2px);
    }
 
-   &-header {
+   &_header {
       @include m.flex(null, null, column);
       row-gap: f.rem(8px);
    }
 
-   &-title {
+   &_title {
       @include m.adaptiveValue('font-size', 18px, 14px);
       font-variant: small-caps;
       font-weight: bold;
@@ -50,7 +50,7 @@
       text-align: center;
    }
 
-   &-close {
+   &_close {
       align-self: center;
       width: fit-content;
       padding: f.rem(2px);
@@ -59,12 +59,12 @@
       @extend %link-effects;
    }
 
-   &-body {
+   &_body {
       @include m.flex(null, null, column);
       row-gap: f.rem(5px);
    }
 
-   &-image {
+   &_image {
       @include m.responsiveImage(true);
       padding: 0 0 146% 100%;
 
@@ -73,10 +73,10 @@
       }
    }
 
-   &-text {
+   &_text {
       @include m.adaptiveValue('font-size', 14px, 10px);
 
-      &-row {
+      &_row {
          padding: 0.143em;
          @include m.adaptiveValue('font-size', 14px, 10px);
          line-height: 1.3;
@@ -101,14 +101,14 @@
       }
    }
 
-   &-url {
+   &_url {
       @include m.adaptiveValue('font-size', 14px, 10px);
       text-align: center;
       color: var(--footer-link-color, v.$amberDark);
       @extend %link-effects;
    }
 
-   &-center {
+   &_center {
       justify-content: center;
       align-items: center;
    }

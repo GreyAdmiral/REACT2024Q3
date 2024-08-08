@@ -6,6 +6,10 @@
    @include m.hover {
       color: var(--disable-pagination-button, v.$gray);
       opacity: 0.5;
+
+      [tabindex='-1'] {
+         opacity: 1;
+      }
    }
 }
 
@@ -15,7 +19,7 @@
    @extend %bblockstyle;
    margin: 0 auto;
 
-   &-item {
+   &_item {
       display: inline-block;
       color: var(--text-color, v.$white);
       background: none;
@@ -26,9 +30,14 @@
       a {
          display: inline-block;
          padding: 0.11em 0.208em;
+
+         &[tabindex='-1'] {
+            pointer-events: none;
+            cursor: default;
+         }
       }
 
-      a:not(.pagination-active) {
+      a:not([tabindex='-1']) {
          cursor: pointer;
          color: inherit;
          width: 100%;
@@ -37,7 +46,7 @@
       }
    }
 
-   &-active,
+   &_active,
    button:disabled {
       color: var(--disable-pagination-button, v.$gray);
       opacity: 0.5;
