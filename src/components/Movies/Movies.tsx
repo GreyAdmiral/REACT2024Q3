@@ -1,41 +1,41 @@
-import { FC, MutableRefObject, useEffect, MouseEvent } from 'react';
-import { useOutletContext } from 'react-router-dom';
-import { useGetFilmsQuery } from '@api/filmsApi';
+'use client';
+import { FC, useEffect } from 'react';
+import { useGetFilmsQuery } from '@services/filmsApi';
 import classNames from 'classnames';
 import { useAppSelector } from '@hooks/useAppSelector';
 import { useAppDispatch } from '@hooks/useAppDispatch';
 import { setMovies, setTotalPages } from '@store/slices/stateSlice';
 import { setIsVisible } from '@store/slices/infoSlice';
 import { Movie } from '@components/Movie/Movie';
-import { Loader } from '@components/Loader/Loader';
 import { CustomNotification } from '@components/CustomNotification/CustomNotification';
 import { resetSelectedMoviesId } from '@store/slices/selectedSlice';
 import { getCSVLine } from '@tools/getCSVLine';
 import { getFilteredFilms } from '@tools/getFilteredFilms';
+import { downloadCSV } from '@/tools/downloadCSV';
 import styles from './Movies.module.scss';
+import type { MouseEventHandler } from 'react';
 
 interface MoviesArray {
    isInfoVisible: boolean;
 }
 
 export const Movies: FC<MoviesArray> = ({ isInfoVisible }) => {
-   const { activePage, keywords } = useAppSelector((state) => state.state);
-   const { data = {}, isLoading, isSuccess } = useGetFilmsQuery({ activePage, keywords });
+   const { keywords, activePage } = useAppSelector((state) => state.state);
+   const { data = {}, isSuccess } = useGetFilmsQuery({ activePage, keywords });
    const { movies, isError } = useAppSelector((state) => state.state);
    const selectedMoviesId = useAppSelector((state) => state.selected.selectedMoviesId);
    const dispatch = useAppDispatch();
    const selectedSize = [...selectedMoviesId].length;
-   const header: MutableRefObject<HTMLTemplateElement> = useOutletContext();
 
-   function resetAllCheckBox(e: MouseEvent) {
+   const resetAllCheckBox = function (e) {
       e.stopPropagation();
       dispatch(resetSelectedMoviesId());
-   }
+   } as MouseEventHandler<HTMLButtonElement>;
 
-   function downloadSelectedInfo(e: MouseEvent) {
+   const downloadSelectedInfo = function (e) {
       e.stopPropagation();
 
-      const text = selectedMoviesId.reduce((acc, it, idx, arr) => {
+      const text = selectedMoviesId.reduce((acc: string, it: any, idx: number, arr: string | any[]) => {
          let string = getCSVLine(it);
 
          if (idx !== arr.length - 1) {
@@ -45,59 +45,44 @@ export const Movies: FC<MoviesArray> = ({ isInfoVisible }) => {
          return acc + string;
       }, '');
 
-      const link = document.createElement('a');
-      link.download = `${selectedMoviesId.length}_movies.csv`;
-      link.href = URL.createObjectURL(new Blob([text], { type: 'text/csv;charset=utf-8' }));
-
-      link.click();
-      URL.revokeObjectURL(link.href);
-   }
+      downloadCSV(text, `${selectedMoviesId.length}_movies`);
+   } as MouseEventHandler<HTMLButtonElement>;
 
    useEffect(() => {
       if (isError) {
-         throw Error('Тест ErrorBoundary!');
+         throw Error('Тест обработки ошибок!');
       } else {
          dispatch(setIsVisible(false));
       }
    }, [dispatch, isError]);
 
    useEffect(() => {
-      header.current.scrollIntoView(true);
-
       if (isSuccess) {
          const films = getFilteredFilms(data.items);
 
          dispatch(setMovies(films));
          dispatch(setTotalPages(data.totalPages));
       }
-
-      return () => {
-         window.scroll(0, 0);
-      };
-   }, [data.items, data.totalPages, dispatch, header, isSuccess]);
+   }, [data.items, data.totalPages, dispatch, isSuccess]);
 
    return (
       <section
-         className={classNames(styles.movies, { [styles.half]: isInfoVisible, [styles.moviesCenter]: isLoading })}
+         className={classNames(styles.movies, { [styles.half]: isInfoVisible })}
          data-page={activePage + keywords}
       >
-         {!isLoading && (
-            <>
-               {!movies.length && <span className={styles.moviesNotFound}>Ничего не найдено</span>}
-               {movies.map((movie) => (
-                  <Movie key={movie.kinopoiskId} movie={movie} />
-               ))}
-            </>
-         )}
+         {keywords && !movies.length && <span className={styles.movies_not_found}>Ничего не найдено</span>}
+         {movies.map((movie) => (
+            <Movie key={movie.kinopoiskId} movie={movie} />
+         ))}
 
-         {isLoading && <Loader />}
          <CustomNotification isOpenNotification={!!selectedSize}>
-            <div className={styles.notificationText}>{`Выбрано фильмов: ${selectedSize}`}</div>
-            <div className={styles.notificationButtons}>
-               <button className={styles.notificationButton} onClick={resetAllCheckBox}>
+            <div className={styles.notification_text}>{`Выбрано фильмов: ${selectedSize}`}</div>
+            <div className={styles.notification_buttons}>
+               <button className={styles.notification_button} onClick={resetAllCheckBox}>
                   Сбросить выбор
                </button>
-               <button className={styles.notificationButton} onClick={downloadSelectedInfo}>
+
+               <button className={styles.notification_button} onClick={downloadSelectedInfo}>
                   Загрузить
                </button>
             </div>

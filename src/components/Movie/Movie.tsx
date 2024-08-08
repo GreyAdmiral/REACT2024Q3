@@ -1,11 +1,13 @@
+'use client';
+import { useSearchParams } from 'next/navigation';
 import { FC, MouseEvent } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { useGetFilmDescriptionMutation } from '@api/filmsApi';
+import { useGetFilmDescriptionMutation } from '@services/filmApi';
+import Image from 'next/image';
 import { CustomCheckBox } from '@components/CustomCheckBox/CustomCheckBox';
 import { useAppDispatch } from '@hooks/useAppDispatch';
 import { getFilteredDescription } from '@tools/getFilteredDescription';
 import { setIsVisible, setDetails, setIsLoading } from '@store/slices/infoSlice';
-import { MovieProps } from '@typefiles/types';
+import type { MovieProps } from '@typesfolder/types';
 import styles from './Movie.module.scss';
 
 type Props = {
@@ -13,16 +15,21 @@ type Props = {
 };
 
 const separator = ' / ';
+const alternateText = 'Постер фильма';
 
 export const Movie: FC<Props> = ({ movie }) => {
-   const [, setSearchParams] = useSearchParams();
    const dispatch = useAppDispatch();
    const [getMovieDescription] = useGetFilmDescriptionMutation();
+   const searchParams = useSearchParams();
 
    function movieClickHandler(e: MouseEvent) {
       e.stopPropagation();
+      const params = new URLSearchParams(searchParams.toString());
 
-      setSearchParams({ info: '1', movie: movie.nameEn || movie.nameOriginal || 'not found' });
+      params.set('info', String(1));
+      params.set('movie', movie.nameEn || movie.nameOriginal || encodeURIComponent(movie.nameRu) || 'not found');
+      window.history.pushState(null, '', `?${params.toString()}`);
+
       dispatch(setIsLoading(true));
       dispatch(setIsVisible(true));
 
@@ -39,40 +46,47 @@ export const Movie: FC<Props> = ({ movie }) => {
          id={movie.kinopoiskId}
          title="Посмотреть подробности"
       >
-         <div className={styles.movieHeader}>
-            <h2 className={styles.movieTitle}>{movie.nameRu || movie.nameEn || movie.nameOriginal}</h2>
+         <div className={styles.movie_header}>
+            <h2 className={styles.movie_title}>{movie.nameRu || movie.nameEn || movie.nameOriginal}</h2>
 
-            <div className={styles.movieRating}>
+            <div className={styles.movie_rating}>
                {movie.ratingKinopoisk && (
-                  <span className={styles.movieRatingKip}>{`kp ${movie.ratingKinopoisk || 0}`}</span>
+                  <span className={styles.movie_rating_kip}>{`kp ${movie.ratingKinopoisk || 0}`}</span>
                )}
-               {movie.ratingImdb && <span className={styles.movieRatingImdb}>{`imdb ${movie.ratingImdb || 0}`}</span>}
+               {movie.ratingImdb && <span className={styles.movie_rating_imdb}>{`imdb ${movie.ratingImdb || 0}`}</span>}
             </div>
          </div>
 
-         <div className={styles.movieBody}>
-            <div className={styles.movieImage}>
-               <img src={movie.posterUrlPreview} alt={movie.nameOriginal} />
+         <div className={styles.movie_body}>
+            <div className={styles.movie_image}>
+               <Image
+                  src={movie.posterUrlPreview}
+                  fill={true}
+                  unoptimized={true}
+                  placeholder="empty"
+                  loading="lazy"
+                  alt={movie.nameOriginal || alternateText}
+               />
             </div>
 
-            <div className={styles.movieText}>
-               <div className={styles.movieTextTitle}>
-                  <div className={styles.movieTextRow}>
+            <div className={styles.movie_text}>
+               <div className={styles.movie_text_title}>
+                  <div className={styles.movie_text_row}>
                      <span>Год выпуска: </span>
                      {movie.year}
                   </div>
 
-                  <div className={styles.movieTextRow}>
+                  <div className={styles.movie_text_row}>
                      <span>Страна: </span>
                      {movie.countries.map((country) => country.country).join(separator)}
                   </div>
 
-                  <div className={styles.movieTextRow}>
+                  <div className={styles.movie_text_row}>
                      <span>Жанр: </span>
                      {movie.genres.map((genre) => genre.genre).join(separator)}
                   </div>
 
-                  <div className={styles.movieTextRow}>
+                  <div className={styles.movie_text_row}>
                      <span>Тип: </span>
                      {movie.type}
                   </div>

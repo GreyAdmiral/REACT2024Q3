@@ -1,3 +1,4 @@
+'use client';
 import { createRef, Dispatch, FC, KeyboardEvent, useState } from 'react';
 import classnames from 'classnames';
 import { useReactPlaceholder } from '@hooks/useReactPlaceholder';
@@ -44,14 +45,14 @@ export const Searsh: FC<SearchProps> = ({ localStorageValue, setLocalStorageValu
       <div className={styles.search} onKeyDown={keyDown}>
          <button
             type="button"
-            className={classnames(styles.searchButton, styles.searchErrorButton)}
+            className={classnames(styles.search_button, styles.search_error_button)}
             onClick={dispatchError}
             ref={searchButtonRef}
          >
             Ошибка
          </button>
 
-         <div className={styles.searchField}>
+         <div className={styles.search_field}>
             <input
                ref={searchRef}
                type="text"
@@ -66,7 +67,7 @@ export const Searsh: FC<SearchProps> = ({ localStorageValue, setLocalStorageValu
             />
          </div>
 
-         <button type="button" className={styles.searchButton} onClick={search} ref={searchButtonRef}>
+         <button type="button" className={styles.search_button} onClick={search} ref={searchButtonRef}>
             Найти
          </button>
       </div>

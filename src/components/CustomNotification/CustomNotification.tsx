@@ -32,7 +32,7 @@ export const CustomNotification: FC<PropsWithChildren & CustomNotificationProps>
 
    if (isOpenNotification) {
       return createPortal(
-         <div className={styles.notificationBody} ref={notificationRef}>
+         <div className={styles.notification_body} ref={notificationRef}>
             {children}
          </div>,
          notificationRoot

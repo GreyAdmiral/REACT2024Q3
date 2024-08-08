@@ -1,5 +1,7 @@
+'use client';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import Image from 'next/image';
 import classNames from 'classnames';
 import { useClickOutside } from '@hooks/useClickOutside';
 import { setIsVisible, setDetails } from '@store/slices/infoSlice';
@@ -9,7 +11,6 @@ import { Loader } from '@components/Loader/Loader';
 import { isExists } from '@tools/isExist';
 import { AppRoutes } from '@router/routes';
 import styles from './MovieInfo.module.scss';
-import image from '@assets/images/loading.svg';
 
 const defaultDetails = {
    nameRu: '',
@@ -21,13 +22,10 @@ const defaultDetails = {
    webUrl: '',
 } as const;
 
-const notFound = {
-   title: 'Не найдено',
-   image: image,
-} as const;
+const notFoundTitle = 'Не найдено';
+const alternateText = 'Постер фильма';
 
 export const MovieInfo = () => {
-   const navigate = useNavigate();
    const asideRef = useRef(null);
    const { nameRu, nameEn, nameOriginal, posterUrl, description, shortDescription, webUrl } = useAppSelector(
       (state) => state.info.details
@@ -35,41 +33,56 @@ export const MovieInfo = () => {
    const isLoading = useAppSelector((state) => state.info.isLoading);
    const activePage = useAppSelector((state) => state.state.activePage);
    const dispatch = useAppDispatch();
+   const router = useRouter();
    const title = nameRu || nameEn || nameOriginal;
-   const validatedTitle = isExists(title) ? title : notFound.title;
+   const validatedTitle = isExists(title) ? title : notFoundTitle;
+   const searchParams = useSearchParams();
    const outClick = () => {
+      const params = new URLSearchParams(searchParams.toString());
+
+      params.delete('info');
+      params.delete('movie');
+      window.history.pushState(null, '', `?${params.toString()}`);
+
       dispatch(setIsVisible(false));
       dispatch(setDetails(defaultDetails));
-      navigate(`${AppRoutes.PAGE_ROUTE}/${activePage}`);
+      router.replace(`${AppRoutes.PAGE_ROUTE}/${activePage}`);
    };
 
    useClickOutside(asideRef, outClick);
 
    return (
-      <aside ref={asideRef} className={classNames(styles.movieInfo, { [styles.movieInfoCenter]: isLoading })}>
+      <aside ref={asideRef} className={classNames(styles.movie_info, { [styles.movie_info_center]: isLoading })}>
          {!isLoading && (
             <>
-               <header className={styles.movieInfoHeader}>
-                  <button className={styles.movieInfoClose} onClick={outClick} title="Скрыть подробности">
+               <header className={styles.movie_info_header}>
+                  <button className={styles.movie_info_close} onClick={outClick} title="Скрыть подробности">
                      {'>>>>>'}
                   </button>
 
-                  <h2 className={styles.movieInfoTitle}>{validatedTitle}</h2>
+                  <h2 className={styles.movie_info_title}>{validatedTitle}</h2>
                </header>
 
-               <div className={styles.movieInfoImage}>
-                  <img src={isExists(posterUrl) ? posterUrl : notFound.image} alt={validatedTitle} />
+               <div className={styles.movie_info_image}>
+                  <Image
+                     src={posterUrl}
+                     fill={true}
+                     unoptimized={true}
+                     placeholder="empty"
+                     priority={true}
+                     alt={validatedTitle || alternateText}
+                  />
                </div>
 
-               <div className={styles.movieInfoBody}>
+               <div className={styles.movie_info_body}>
                   {(description || shortDescription) && (
-                     <div className={styles.movieInfoTextRow}>
+                     <div className={styles.movie_info_text_row}>
                         <span>Описание: </span>
                         {description || shortDescription}
                      </div>
                   )}
 
-                  <a className={styles.movieInfoUrl} href={webUrl} target="_blank" title="Найти на «Кинопоиск»">
+                  <a className={styles.movie_info_url} href={webUrl} target="_blank" title="Найти на «Кинопоиск»">
                      Подробнее на «Кинопоиск»
                   </a>
                </div>

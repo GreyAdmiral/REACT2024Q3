@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { SchemeState } from '@typefiles/types';
+import { SchemeState } from '@typesfolder/types';
 
 export const schemeState: SchemeState = {
    colorScheme: '',

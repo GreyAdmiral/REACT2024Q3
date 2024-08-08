@@ -1,4 +1,4 @@
-import { MovieDescription, MovieDetails } from '@typefiles/types';
+import { MovieDescription, MovieDetails } from '@typesfolder/types';
 
 export function getFilteredDescription(object: MovieDescription): MovieDetails {
    const { nameRu, nameEn, nameOriginal, posterUrl, description, shortDescription, webUrl } = object;

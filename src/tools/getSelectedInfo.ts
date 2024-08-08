@@ -1,4 +1,4 @@
-import { MovieProps, SelectedMovie } from '@typefiles/types';
+import { MovieProps, SelectedMovie } from '@typesfolder/types';
 
 export function getSelectedInfo(movie: MovieProps): SelectedMovie {
    const separator = ' / ';

@@ -1,11 +1,11 @@
+'use client';
 import { useAppSelector } from '@hooks/useAppSelector';
 import { useFastLocalStorage } from '@hooks/useFastLocalStorage';
 import { useAppDispatch } from '@hooks/useAppDispatch';
 import { setColorScheme } from '@store/slices/colorSchemeSlice';
 import { getSchemeIconId } from '@tools/getSchemeIconId';
-import { SchemeName } from '@typefiles/types';
+import { SchemeName } from '@typesfolder/types';
 import styles from './ColorSchemeButton.module.scss';
-import sprite from '@assets/sprite.svg';
 
 export const ColorSchemeButton = () => {
    const schemeName = useAppSelector((state) => state.scheme.colorScheme);
@@ -23,13 +23,13 @@ export const ColorSchemeButton = () => {
    return (
       <button
          type="button"
-         className={styles.schemeButton}
+         className={styles.scheme_button}
          onClick={writeSchemeName}
          title={`Выбрать ${schemeName == 'light' ? 'тёмную' : 'светлую'} тему`}
          aria-label={`Выбрать ${schemeName == 'light' ? 'тёмную' : 'светлую'} тему`}
       >
          <svg>
-            <use xlinkHref={`${sprite}#${getSchemeIconId(schemeName as SchemeName)}`} />
+            <use xlinkHref={`/images/sprite.svg#${getSchemeIconId(schemeName as SchemeName)}`} />
          </svg>
       </button>
    );

@@ -1,18 +1,20 @@
+'use client';
+import Link from 'next/link';
+import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useId, useState } from 'react';
-import { NavLink, useNavigate, useParams } from 'react-router-dom';
+import classNames from 'classnames';
 import { useAppSelector } from '@hooks/useAppSelector';
 import { useAppDispatch } from '@hooks/useAppDispatch';
 import { setActivePage } from '@store/slices/stateSlice';
 import { setIsVisible } from '@store/slices/infoSlice';
 import { AppRoutes } from '@router/routes';
 import styles from './Pagination.module.scss';
-
-const setActiveClass = ({ isActive }: { isActive: boolean }) => (isActive ? styles.paginationActive : undefined);
+import type { MouseEvent } from 'react';
 
 export const Pagination = () => {
    const id = useId();
-   const navigate = useNavigate();
-   const { number } = useParams();
+   const { id: number } = useParams();
+   const router = useRouter();
    const [isPrevPageDisabled, setIsPrevPageDisabled] = useState<boolean>(false);
    const [isNextPageDisabled, setIsNextPageDisabled] = useState<boolean>(false);
    const totalPages = useAppSelector((state) => state.state.totalPages);
@@ -23,20 +25,20 @@ export const Pagination = () => {
       dispatch(setActivePage(pageNumber));
    }
 
-   function prevButtonClick(e: React.MouseEvent) {
+   function prevButtonClick(e: MouseEvent) {
       e.stopPropagation();
 
       if (number && +number > 1) {
-         navigate(`${AppRoutes.PAGE_ROUTE}/${+number - 1}`);
+         router.replace(`${AppRoutes.PAGE_ROUTE}/${+number - 1}`);
          switchContent(+number - 1);
       }
    }
 
-   function nextButtonClick(e: React.MouseEvent) {
+   function nextButtonClick(e: MouseEvent) {
       e.stopPropagation();
 
       if (number && totalPages && +number < totalPages) {
-         navigate(`${AppRoutes.PAGE_ROUTE}/${+number + 1}`);
+         router.replace(`${AppRoutes.PAGE_ROUTE}/${+number + 1}`);
          switchContent(+number + 1);
       }
    }
@@ -57,28 +59,29 @@ export const Pagination = () => {
 
    return totalPages ? (
       <div className={styles.pagination}>
-         <button className={styles.paginationItem} disabled={isPrevPageDisabled} onClick={prevButtonClick}>
+         <button className={styles.pagination_item} disabled={isPrevPageDisabled} onClick={prevButtonClick}>
             ◄
          </button>
 
          <ul>
             {Array.from({ length: totalPages }).map((_, ind) => (
-               <li key={`${id}-${ind}`} className={styles.paginationItem}>
-                  <NavLink
-                     to={`${AppRoutes.PAGE_ROUTE}/${ind + 1}`}
-                     className={setActiveClass}
+               <li key={`${id}-${ind}`} className={styles.pagination_item}>
+                  <Link
+                     href={`${AppRoutes.PAGE_ROUTE}/${ind + 1}`}
+                     className={classNames({ [styles.pagination_active]: ind + 1 === +number })}
+                     tabIndex={ind + 1 === +number ? -1 : undefined}
                      onClick={(e) => {
                         e.stopPropagation();
                         switchContent(ind + 1);
                      }}
                   >
                      {ind + 1}
-                  </NavLink>
+                  </Link>
                </li>
             ))}
          </ul>
 
-         <button className={styles.paginationItem} disabled={isNextPageDisabled} onClick={nextButtonClick}>
+         <button className={styles.pagination_item} disabled={isNextPageDisabled} onClick={nextButtonClick}>
             ►
          </button>
       </div>

@@ -21,9 +21,9 @@ export type MovieProps = {
 };
 
 export interface MovieDescription extends MovieProps {
-   kinopoiskHDId: '' | null;
-   coverUrl: '' | null;
-   logoUrl: '' | null;
+   kinopoiskHDId: string | null;
+   coverUrl: string | null;
+   logoUrl: string | null;
    reviewsCount: number;
    ratingGoodReview: number | null;
    ratingGoodReviewVoteCount: number | null;
@@ -43,8 +43,8 @@ export interface MovieDescription extends MovieProps {
    editorAnnotation: string | null;
    isTicketsAvailable: boolean;
    productionStatus: string | null;
-   ratingMpaa: number | null;
-   ratingAgeLimits: number | null;
+   ratingMpaa: string | number | null;
+   ratingAgeLimits: string | number | null;
    startYear: number | null;
    endYear: number | null;
    serial: boolean;

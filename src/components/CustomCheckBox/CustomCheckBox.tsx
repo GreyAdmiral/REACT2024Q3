@@ -3,7 +3,7 @@ import { useAppSelector } from '@hooks/useAppSelector';
 import { useAppDispatch } from '@hooks/useAppDispatch';
 import { setSelectedMoviesId } from '@store/slices/selectedSlice';
 import { getSelectedInfo } from '@tools/getSelectedInfo';
-import { MovieProps } from '@typefiles/types';
+import { MovieProps } from '@typesfolder/types';
 import styles from './CustomCheckBox.module.scss';
 
 interface CustomCheckBoxProps {
@@ -24,8 +24,9 @@ export const CustomCheckBox: FC<CustomCheckBoxProps> = ({ movie }) => {
 
    return (
       <label
+         id="checkbox"
          title={isChecked ? 'Отменить выбор фильма' : 'Выбрать фильм'}
-         className={styles.customCheckbox}
+         className={styles.custom_checkbox}
          onClick={(e) => {
             e.stopPropagation();
          }}

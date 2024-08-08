@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { MovieProps, MoviesState } from '@typefiles/types';
+import { MovieProps, MoviesState } from '@typesfolder/types';
 
 export const initialState: MoviesState = {
    activePage: 1,

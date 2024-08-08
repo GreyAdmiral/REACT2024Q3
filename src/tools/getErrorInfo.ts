@@ -1,6 +1,6 @@
-type ERRORS = Record<number | string, string>;
+type ErrorsType = Record<number | string, string>;
 
-const ERRORS: ERRORS = {
+const ERRORS: ErrorsType = {
    401: 'Wrong token.',
    402: 'Request limit exceeded.',
    403: 'Request limit exceeded.',

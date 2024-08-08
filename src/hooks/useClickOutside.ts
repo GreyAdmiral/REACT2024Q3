@@ -5,7 +5,7 @@ export const useClickOutside = (ref: MutableRefObject<HTMLTemplateElement | null
       e.stopPropagation();
       const target = e.target as HTMLTemplateElement;
 
-      if (ref.current && !ref.current.contains(target)) {
+      if (ref.current && !ref.current.contains(target) && !target.closest('#checkbox')) {
          callback();
       }
    };

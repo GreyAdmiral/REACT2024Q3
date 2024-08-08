@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { InfoState, MovieDetails } from '@typefiles/types';
+import { InfoState, MovieDetails } from '@typesfolder/types';
 
 export const initialState: InfoState = {
    isVisible: false,

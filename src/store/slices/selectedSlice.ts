@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { SelectedMovie } from '@typefiles/types';
+import { SelectedMovie } from '@typesfolder/types';
 
 type InitialSelectedState = {
    selectedMoviesId: SelectedMovie[];
