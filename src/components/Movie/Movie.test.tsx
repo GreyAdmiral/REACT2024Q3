@@ -1,9 +1,7 @@
 import { beforeEach, describe, expect, test } from 'vitest';
 import { render, screen } from '@testing-library/react';
+import StoreProvider from '../../store/StoreProvider';
 import { Movie } from './Movie';
-import { Provider } from 'react-redux';
-import { BrowserRouter as Router } from 'react-router-dom';
-import store from '../../store';
 
 const movie = {
    kinopoiskId: '5260016',
@@ -32,11 +30,9 @@ const movie = {
 describe('Тесты компонента с фильмом', () => {
    beforeEach(() => {
       render(
-         <Provider store={store}>
-            <Router>
-               <Movie movie={movie} />
-            </Router>
-         </Provider>
+         <StoreProvider>
+            <Movie movie={movie} />
+         </StoreProvider>
       );
    });
 

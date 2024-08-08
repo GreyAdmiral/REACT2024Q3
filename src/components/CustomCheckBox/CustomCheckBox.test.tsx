@@ -1,9 +1,8 @@
 import { beforeEach, describe, expect, test } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import StoreProvider from '../../store/StoreProvider';
 import { CustomCheckBox } from './CustomCheckBox';
-import { Provider } from 'react-redux';
-import store from '../../store';
 
 const movie = {
    kinopoiskId: '5260016',
@@ -32,9 +31,9 @@ const movie = {
 describe('Тесты кнопки выбора темы', () => {
    beforeEach(() => {
       render(
-         <Provider store={store}>
+         <StoreProvider>
             <CustomCheckBox movie={movie} />
-         </Provider>
+         </StoreProvider>
       );
    });
 

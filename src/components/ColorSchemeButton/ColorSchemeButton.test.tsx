@@ -1,16 +1,15 @@
 import { beforeEach, describe, expect, test } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
+import StoreProvider from '../../store/StoreProvider';
 import { ColorSchemeButton } from './ColorSchemeButton';
-import { Provider } from 'react-redux';
-import store from '../../store';
 
 describe('Тесты кнопки выбора темы', () => {
    beforeEach(() => {
       render(
-         <Provider store={store}>
+         <StoreProvider>
             <ColorSchemeButton />
-         </Provider>
+         </StoreProvider>
       );
    });
 
@@ -18,7 +17,7 @@ describe('Тесты кнопки выбора темы', () => {
       const button = screen.getByRole('button');
 
       expect(button).toBeInTheDocument();
-      expect(button).toHaveClass(/schemeButton/);
+      expect(button).toHaveClass(/scheme_button/);
    });
 
    test('Тест нажатия', async () => {

@@ -1,13 +1,19 @@
 import { describe, expect, test } from 'vitest';
+import { downloadCSV } from './downloadCSV';
 import { getCSVLine } from './getCSVLine';
 import { getErrorInfo } from './getErrorInfo';
 import { getFilteredFilms } from './getFilteredFilms';
 import { getSchemeIconId } from './getSchemeIconId';
 import { getSelectedInfo } from './getSelectedInfo';
+import { getFilteredDescription } from './getFilteredDescription';
 import { isExists } from './isExist';
-import { MovieProps, SchemeName, SelectedMovie } from '@typefiles/types';
+import { MovieProps, SchemeName, SelectedMovie } from '@typesfolder/types';
 
 describe('Тесты вспомогательных функций', () => {
+   test('Тест функции downloadCSV', () => {
+      expect(downloadCSV('lorem ipsum', 'testfile')).toBeUndefined();
+   });
+
    test('Тест функции getCSVLine', () => {
       const movie: SelectedMovie = {
          id: 'abc',
@@ -120,6 +126,7 @@ describe('Тесты вспомогательных функций', () => {
             posterUrlPreview: 'https://kinopoiskapiunofficial.tech/images/posters/kp_small/1201206.jpg',
          },
       ]);
+      expect(filteredMovies.length).toBe(1);
    });
 
    test('Тест функции getSchemeIconId', () => {
@@ -158,6 +165,75 @@ describe('Тесты вспомогательных функций', () => {
       const result = getSelectedInfo(movie as MovieProps);
 
       expect(result).toEqual(expectedResult);
+   });
+
+   test('Тест функции getFilteredDescription', () => {
+      const movieDescription = {
+         kinopoiskId: '305',
+         kinopoiskHDId: '4b012',
+         imdbId: 'tt0183649',
+         nameRu: 'Phone Booth',
+         nameEn: 'Phone Booth',
+         nameOriginal: 'Phone Booth',
+         posterUrl: '305.jpg',
+         posterUrlPreview: '305.jpg',
+         coverUrl: 'avatars.mds.yandex.net',
+         logoUrl: '',
+         reviewsCount: 157,
+         ratingGoodReview: 95.0,
+         ratingGoodReviewVoteCount: 139,
+         ratingKinopoisk: 7.6,
+         ratingKinopoiskVoteCount: 174652,
+         ratingImdb: 7.1,
+         ratingImdbVoteCount: 287675,
+         ratingFilmCritics: 6.5,
+         ratingFilmCriticsVoteCount: 188,
+         ratingAwait: null,
+         ratingAwaitCount: 0,
+         ratingRfCritics: null,
+         ratingRfCriticsVoteCount: 1,
+         webUrl: 'film/305/',
+         year: 2002,
+         filmLength: 81,
+         slogan: 'Lorem ipsum',
+         description: 'Lorem ipsum dolor sit amet',
+         shortDescription: 'Lorem ipsum dolor',
+         editorAnnotation: null,
+         isTicketsAvailable: false,
+         productionStatus: null,
+         type: 'FILM',
+         ratingMpaa: 'r',
+         ratingAgeLimits: 'age18',
+         countries: [
+            {
+               country: 'США',
+            },
+         ],
+         genres: [
+            {
+               genre: 'триллер',
+            },
+         ],
+         startYear: null,
+         endYear: null,
+         serial: false,
+         shortFilm: false,
+         completed: false,
+         hasImax: false,
+         has3D: false,
+         lastSync: '2024-07-14T14:12:14.77372',
+      };
+      const desscription = {
+         nameRu: 'Phone Booth',
+         nameEn: 'Phone Booth',
+         nameOriginal: 'Phone Booth',
+         posterUrl: '305.jpg',
+         description: 'Lorem ipsum dolor sit amet',
+         shortDescription: 'Lorem ipsum dolor',
+         webUrl: 'film/305/',
+      };
+
+      expect(getFilteredDescription(movieDescription)).toEqual(desscription);
    });
 
    test('Тест функции isExists', () => {

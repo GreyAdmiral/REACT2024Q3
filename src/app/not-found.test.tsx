@@ -1,13 +1,13 @@
 import { describe, expect, test } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { UndefinedPage } from './UndefinedPage';
+import UndefinedPage from './not-found';
 
 describe('Тесты страницы 404', () => {
    test('Рендер', () => {
       render(<UndefinedPage />);
-      const page = screen.getByText(/404/i);
+      const page = screen.getByText(/Такой страницы нет!/i);
 
       expect(page).toBeInTheDocument();
-      expect(page).toContainHTML('<span>Ошибка 404</span>');
+      expect(page).toContainHTML('<span>Такой страницы нет!</span>');
    });
 });

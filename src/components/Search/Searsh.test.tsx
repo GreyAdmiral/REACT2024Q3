@@ -1,10 +1,8 @@
 import { beforeEach, describe, expect, test, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
+import StoreProvider from '../../store/StoreProvider';
 import { Searsh } from './Searsh';
-import { BrowserRouter as Router } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import store from '../../store';
 
 const localStorageValue = '';
 const testUserValue = 'Lorem ipsum';
@@ -13,11 +11,9 @@ const setLocalStorageValue = vi.fn();
 describe('Тесты поиска', () => {
    beforeEach(() => {
       render(
-         <Provider store={store}>
-            <Router>
-               <Searsh localStorageValue={localStorageValue} setLocalStorageValue={setLocalStorageValue} />
-            </Router>
-         </Provider>
+         <StoreProvider>
+            <Searsh localStorageValue={localStorageValue} setLocalStorageValue={setLocalStorageValue} />
+         </StoreProvider>
       );
    });
 

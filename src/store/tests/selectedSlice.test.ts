@@ -11,6 +11,16 @@ const movie = {
    genres: '',
 };
 
+const movie2 = {
+   id: '5678',
+   name: 'Dolor sit amet',
+   year: 2345,
+   type: '',
+   posterUrl: '',
+   countries: '',
+   genres: '',
+};
+
 describe('Тест среза selectedSlice', () => {
    test('Инициализация состояния', () => {
       const state = selectedSliceReducer(undefined, { type: 'unknown' });
@@ -24,5 +34,15 @@ describe('Тест среза selectedSlice', () => {
       expect(initialState.selectedMoviesId.length).toBe(0);
       expect(state.selectedMoviesId.length).toBe(1);
       expect(state.selectedMoviesId[0].name).toEqual('Lorem ipsum');
+   });
+
+   test('Удаление выбранного фильма', () => {
+      const state = selectedSliceReducer(
+         { selectedMoviesId: [movie, movie2] },
+         setSelectedMoviesId({ isSelected: false, info: movie })
+      );
+
+      expect(state.selectedMoviesId.length).toBe(1);
+      expect(state.selectedMoviesId[0].name).toEqual('Dolor sit amet');
    });
 });

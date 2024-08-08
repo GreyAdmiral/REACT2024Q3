@@ -1,15 +1,14 @@
 import { describe, expect, test } from 'vitest';
 import { render } from '@testing-library/react';
+import StoreProvider from '../../store/StoreProvider';
 import { Loader } from './Loader';
-import { Provider } from 'react-redux';
-import store from '../../store';
 
 describe('Тесты спинера', () => {
    test('Рендер', () => {
       const { container } = render(
-         <Provider store={store}>
+         <StoreProvider>
             <Loader />
-         </Provider>
+         </StoreProvider>
       );
       const loaderElement = container.querySelector('span');
 

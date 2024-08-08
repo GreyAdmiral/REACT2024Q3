@@ -1,19 +1,15 @@
 import { beforeEach, describe, expect, test } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
+import StoreProvider from '../../store/StoreProvider';
 import { Header } from './Header';
-import { BrowserRouter as Router } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import store from '../../store';
 
 describe('Тесты шапки', () => {
    beforeEach(() => {
       render(
-         <Provider store={store}>
-            <Router>
-               <Header />
-            </Router>
-         </Provider>
+         <StoreProvider>
+            <Header />
+         </StoreProvider>
       );
    });
 

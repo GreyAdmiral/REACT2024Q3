@@ -8,8 +8,7 @@ describe('Тесты подвала', () => {
       const footer = screen.getByText(/RSScool/i);
 
       expect(footer).toBeInTheDocument();
-      expect(footer).toContainHTML(
-         '<a href="https://rs.school/" title="Открыть сайт школы" target="_blank">RSScool</a>'
-      );
+      expect(footer).toHaveAttribute('href', 'https://rs.school/');
+      expect(footer).toHaveAttribute('title', 'Открыть сайт школы');
    });
 });
