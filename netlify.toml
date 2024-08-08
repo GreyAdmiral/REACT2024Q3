@@ -1,0 +1,9 @@
+[build]
+  functions = "functions"
+  command = "CI= npm run build"
+  publish = "out"
+  base = "apps/web"
+
+[dev]
+  base = "apps/web"
+  command = "next dev"

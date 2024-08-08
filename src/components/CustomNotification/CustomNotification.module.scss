@@ -1,0 +1,31 @@
+.notification {
+   @include m.flex();
+   position: fixed;
+   left: 0;
+   bottom: 0;
+   padding: f.rem(10px);
+   transition: all 0.8s ease 0s;
+   z-index: 25;
+   cursor: pointer;
+   pointer-events: none;
+
+   @include m.smalltablet {
+      bottom: 10%;
+   }
+
+   &_body {
+      @include m.adaptiveValue('font-size', 16px, 13px);
+      color: var(--notification-color, v.$comicsRad);
+      background-color: var(--notification-bg, v.$amberDark);
+      border: 1px solid var(--notification-border, v.$comicsRad);
+      border-radius: 5px;
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.4;
+      letter-spacing: 0.25ex;
+      text-align: center;
+      padding: f.rem(15px);
+      cursor: auto;
+      overflow: hidden;
+      pointer-events: auto;
+   }
+}

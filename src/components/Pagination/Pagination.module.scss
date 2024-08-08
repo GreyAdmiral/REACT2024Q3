@@ -1,0 +1,55 @@
+%effect {
+   @include m.focused {
+      color: var(--error-color, v.$comicsRad);
+   }
+
+   @include m.hover {
+      color: var(--disable-pagination-button, v.$gray);
+      opacity: 0.5;
+
+      [tabindex='-1'] {
+         opacity: 1;
+      }
+   }
+}
+
+.pagination {
+   @extend %centerflex;
+   padding: 0.208em;
+   @extend %bblockstyle;
+   margin: 0 auto;
+
+   &_item {
+      display: inline-block;
+      color: var(--text-color, v.$white);
+      background: none;
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+      @include m.adaptiveValue('font-size', 24px, 20px);
+      @extend %effect;
+
+      a {
+         display: inline-block;
+         padding: 0.11em 0.208em;
+
+         &[tabindex='-1'] {
+            pointer-events: none;
+            cursor: default;
+         }
+      }
+
+      a:not([tabindex='-1']) {
+         cursor: pointer;
+         color: inherit;
+         width: 100%;
+         height: 100%;
+         @extend %effect;
+      }
+   }
+
+   &_active,
+   button:disabled {
+      color: var(--disable-pagination-button, v.$gray);
+      opacity: 0.5;
+      cursor: default;
+   }
+}

@@ -1,0 +1,29 @@
+@use 'sass:meta';
+@use 'base';
+
+* {
+   @extend %taphighlight;
+}
+
+h1 {
+   @include m.adaptiveValue('font-size', 49px, 20px);
+}
+
+h2 {
+   @include m.adaptiveValue('font-size', 19px, 16px);
+}
+
+::selection {
+   background-color: var(--selection-bg);
+}
+
+.main {
+   height: 100%;
+   padding: 5px;
+
+   &__body {
+      @include m.flex(null, null, column);
+      row-gap: f.rem(5px);
+      height: 100%;
+   }
+}
