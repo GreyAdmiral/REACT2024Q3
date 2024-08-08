@@ -10,10 +10,13 @@ node_modules
 /dist
 dist/
 build/
+next
+next/
 /config
 config/
-vite.config.ts
-vite.config.js
-vitest.config.ts
+postcss.config.mjs
+vitest.config.mts
+vitest.setup.mts
 package-lock.json
 /coverage
+coverage/

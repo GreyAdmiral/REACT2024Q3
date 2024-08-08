@@ -16,6 +16,12 @@ global.matchMedia =
       };
    };
 
+global.fetch = vi.fn();
+global.URL.createObjectURL = vi.fn();
+global.URL.revokeObjectURL = vi.fn();
+window.URL.createObjectURL = vi.fn();
+window.URL.revokeObjectURL = vi.fn();
+
 afterEach(() => {
    cleanup();
 });
