@@ -1,0 +1,31 @@
+.main {
+   gap: f.rem(15px);
+   color: v.$white;
+   @include m.flex(center, center, column);
+
+   &-title {
+      align-self: center;
+   }
+
+   &-list {
+      gap: f.rem(10px);
+      color: v.$white;
+      @include m.flex(null, null, column);
+
+      &-item {
+         padding: f.rem(5px);
+         @include m.adaptiveValue('font-size', 24px, 16px);
+
+         a {
+            color: inherit;
+            transition: color 0.8s ease 0s;
+         }
+
+         @include m.hover {
+            a {
+               color: v.$blue;
+            }
+         }
+      }
+   }
+}

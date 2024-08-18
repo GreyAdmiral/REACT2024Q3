@@ -1,0 +1,200 @@
+.page {
+   gap: f.rem(15px);
+   color: v.$white;
+   @include m.flex(center, center, column);
+
+   &-title {
+      align-self: center;
+      padding: f.rem(5px);
+      @include m.adaptiveValue('font-size', 24px, 16px);
+
+      a {
+         color: inherit;
+         transition: color 0.8s ease 0s;
+      }
+
+      @include m.hover {
+         a {
+            color: v.$blue;
+         }
+      }
+   }
+
+   &-form {
+      @include m.flex(null, null, column);
+      gap: f.rem(10px);
+      min-width: 372px;
+      padding: f.rem(40px);
+      background: v.$blackTransparentHalf;
+      box-shadow: 0 15px 25px v.$blackTransparentOverHalf;
+      border-radius: 10px;
+
+      &-box {
+         position: relative;
+         display: block;
+
+         input {
+            width: 100%;
+            max-width: 100%;
+            padding: f.rem(10px) 0;
+            color: v.$white;
+            outline: none;
+            border: none;
+            border-bottom: 1px solid v.$white;
+            background: transparent;
+            margin-bottom: f.rem(30px);
+            @include m.adaptiveValue('font-size', 16px, 12px);
+
+            &:focus ~ label:not([for]),
+            &[aria-invalid='false'] ~ label:not([for]) {
+               top: f.rem(-20px);
+               left: 0;
+               color: v.$blue;
+               @include m.adaptiveValue('font-size', 12px, 10px);
+            }
+         }
+
+         label:not([for]) {
+            position: absolute;
+            top: 0;
+            left: 0;
+            padding: f.rem(10px) 0;
+            color: v.$white;
+            pointer-events: none;
+            transition: all 0.5s ease 0s;
+            @include m.adaptiveValue('font-size', 16px, 12px);
+         }
+
+         label[for] {
+            display: block;
+            position: relative;
+            left: 0;
+            @extend %noselect;
+
+            & + span {
+               top: 0;
+               padding-top: f.rem(10px);
+            }
+         }
+      }
+
+      &-submit {
+         display: inline-block;
+         position: relative;
+         padding: f.rem(15px);
+         color: v.$blue;
+         background-color: transparent;
+         letter-spacing: 4px;
+         text-decoration: none;
+         text-transform: uppercase;
+         margin-top: f.rem(30px); // ? Под вопросом
+         overflow: hidden;
+         @include m.animatebtn();
+         @include m.adaptiveValue('font-size', 16px, 12px);
+
+         @include m.hover {
+            background: v.$blue;
+            color: v.$white;
+            border-radius: 5px;
+            box-shadow:
+               0 0 5px v.$blue,
+               0 0 25px v.$blue,
+               0 0 50px v.$blue,
+               0 0 100px v.$blue;
+         }
+
+         span {
+            position: absolute;
+            display: block;
+
+            &:nth-child(1) {
+               top: 0;
+               left: -100%;
+               width: 100%;
+               height: 2px;
+               background: linear-gradient(90deg, transparent, v.$blue);
+               animation: btn-anim1 1s linear infinite;
+            }
+
+            &:nth-child(2) {
+               top: -100%;
+               right: 0;
+               width: 2px;
+               height: 100%;
+               background: linear-gradient(180deg, transparent, v.$blue);
+               animation: btn-anim2 1s linear infinite;
+               animation-delay: 0.25s;
+            }
+
+            &:nth-child(3) {
+               bottom: 0;
+               right: -100%;
+               width: 100%;
+               height: 2px;
+               background: linear-gradient(270deg, transparent, v.$blue);
+               animation: btn-anim3 1s linear infinite;
+               animation-delay: 0.5s;
+            }
+
+            &:nth-child(4) {
+               bottom: -100%;
+               left: 0;
+               width: 2px;
+               height: 100%;
+               background: linear-gradient(360deg, transparent, v.$blue);
+               animation: btn-anim4 1s linear infinite;
+               animation-delay: 0.75s;
+            }
+         }
+      }
+
+      &-error {
+         display: inline-block;
+         position: relative;
+         top: f.rem(-20px);
+         left: 0;
+         color: v.$error;
+         @include m.adaptiveValue('font-size', 14px, 10px);
+      }
+   }
+}
+
+@keyframes btn-anim1 {
+   0% {
+      left: -100%;
+   }
+   50%,
+   100% {
+      left: 100%;
+   }
+}
+
+@keyframes btn-anim2 {
+   0% {
+      top: -100%;
+   }
+   50%,
+   100% {
+      top: 100%;
+   }
+}
+
+@keyframes btn-anim3 {
+   0% {
+      right: -100%;
+   }
+   50%,
+   100% {
+      right: 100%;
+   }
+}
+
+@keyframes btn-anim4 {
+   0% {
+      bottom: -100%;
+   }
+   50%,
+   100% {
+      bottom: 100%;
+   }
+}
