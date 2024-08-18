@@ -1,0 +1,10 @@
+@use 'sass:meta';
+@use 'base';
+
+* {
+   @extend %taphighlight;
+}
+
+h1 {
+   @include m.adaptiveValue('font-size', 40px, 24px);
+}
